@@ -1,7 +1,33 @@
 #include "Segment.h"
 
+long Segment::SEGMENT_ID;
+
 Segment::Segment()
 {
+
+}
+Segment::Segment(string name)
+{
+	setID(SEGMENT_ID);
+	SEGMENT_ID++;
+	setName(name);
+}
+
+Segment::Segment(string name, long size)
+{
+	setID(SEGMENT_ID);
+	SEGMENT_ID++;
+	setName(name);
+	setSize(size);
+}
+Segment::Segment(string name, long base, long limit, Segment::segmentState state)
+{
+	setID(SEGMENT_ID);
+	SEGMENT_ID++;
+	setName(name);
+	setBase(base);
+	setLimit(limit);
+	setState(state);
 }
 
 Segment::~Segment()
@@ -20,6 +46,14 @@ void Segment::setID(long id)
 void Segment::setBase(long base)
 {
 	this->base = base;
+}
+void Segment::setStoredBase(long storedBase)
+{
+	this->storedBase = storedBase;
+}
+void Segment::setSize(long size)
+{
+	this->size = size;
 }
 void Segment::setLimit(long limit)
 {
@@ -43,6 +77,14 @@ long Segment::getBase()
 {
 	return base;
 }
+long Segment::getStoredBase()
+{
+	return storedBase;
+}
+long Segment::getSize()
+{
+	return size;
+}
 string Segment::getName()
 {
 	return name;
@@ -59,13 +101,17 @@ void Segment::markAsOldProcess(long baseAddress, long size)
 	setBase(baseAddress);
 	setLimit(size);
 }
-void Segment::sortSegList_ascending(list<Segment> segmentList)
+void Segment::sortSegListBySize_ascending(list<Segment> &segmentList)
 {
 	segmentList.sort(Segment::ascendingSortBySize);
 }
-void Segment::sortSegList_descending(list<Segment> segmentList)
+void Segment::sortSegListBySize_descending(list<Segment> &segmentList)
 {
 	segmentList.sort(Segment::descendingSortBySize);
+}
+void Segment::sortSegListByBaseAdd_ascending(list<Segment> &segmentList)
+{
+	segmentList.sort(Segment::ascendingSortByBaseAdd);
 }
 bool Segment::ascendingSortBySize(const Segment &seg1, const Segment &seg2)
 {
@@ -73,9 +119,13 @@ bool Segment::ascendingSortBySize(const Segment &seg1, const Segment &seg2)
 }
 bool Segment::descendingSortBySize(const Segment &seg1, const Segment &seg2)
 {
-	return seg1.limit < seg2.limit;
+	return seg1.limit > seg2.limit;
 }
-list<Segment> Segment::assignFree(list<Segment> segmentList)
+bool Segment::ascendingSortByBaseAdd(const Segment &seg1, const Segment &seg2)
+{
+	return seg1.base < seg2.base;
+}
+list<Segment> Segment::filterFree(list<Segment> segmentList)
 {
 	list<Segment> returnable;
 	list<Segment>::iterator it;
@@ -89,3 +139,27 @@ list<Segment> Segment::assignFree(list<Segment> segmentList)
 	}
 	return returnable;
 }
+list<Segment> Segment::collect(list<Segment> memorySegmentsList)
+{
+	sortSegListByBaseAdd_ascending(memorySegmentsList);
+	list<Segment>::iterator it;
+	list<Segment>::iterator it2 = ++it;
+	it--;
+	list<Segment> returnable;
+	for (it = memorySegmentsList.begin(); it != memorySegmentsList.end(); ++it)
+	{
+		if (((it->base) + (it->limit)) == (it2->base))
+		{
+			long toBeAdded = it->limit + it2->limit;
+			it->limit = toBeAdded; 
+			memorySegmentsList.erase(it2);
+			returnable.push_back(*it);
+		}
+		else
+		{
+			returnable.push_back(*it);
+		}
+	}
+	return returnable;
+}
+

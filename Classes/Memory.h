@@ -15,6 +15,8 @@ public:
 	list<Segment> allocatedSegmentsList;
 	list<Segment> memorySegmentsList;
 
+	Memory();
+	Memory(long size);
 	Memory(long size, list<Segment> allocatedSegmentsList, list<Segment> freeSegmentsList);
 	~Memory();
 
@@ -30,7 +32,20 @@ public:
 
 
 	//other methods
-	void allocateProcess(Process process);
+
+	/**Given a segmented process, checks that allocation can happen in this Memory object. Returns true
+	*if allocation can occur and false if allocation cannot occur.
+	*/
 	bool first_fit_allocate_check(Process process);
-	bool first_fit_allocate(Process process);
+	/**Given a segmented process, checks that allocation can happen in this Memory object and allocates the object. Returns true
+	*if allocation successfuly occured and false if allocation cannot occur.
+	*Assigns the base what which a segment was allocated in the memory to the Segment attribute storedBase.
+	*/
+	bool first_fit_allocate(Process &process);
+	/**Prints contents of this memory.
+	*/
+	void printMemory();
+	/**Pushes a segments (adds a segment) to this memory's memorySegmentsList.
+	*/
+	void addSegment(Segment segment);
 };

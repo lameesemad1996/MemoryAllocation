@@ -26,6 +26,9 @@ public:
 	processState getState();
 
 	//other functions
+
+	/**Pushes a segments (adds a segment) to this process's segmentList.
+	*/
 	void addSegment(Segment segment);
 
 	friend class Memory;

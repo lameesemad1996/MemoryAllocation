@@ -1,5 +1,13 @@
 #include "Memory.h"
 
+Memory::Memory()
+{
+
+}
+Memory::Memory(long size)
+{
+
+}
 Memory::Memory(long size, list<Segment> allocatedSegmentsList, list<Segment> freeSegmentsList)
 {
 
@@ -9,7 +17,7 @@ Memory::~Memory()
 {
 }
 
-//set methods
+///set methods
 void Memory::setSize(long size)
 {
 	this->size = size;
@@ -23,7 +31,7 @@ void Memory::setAllocatedSize(long size)
 	this->size = size;
 }
 
-//get methods
+///get methods
 long Memory::getSize()
 {
 	return size;
@@ -37,33 +45,48 @@ long Memory::getAllocatedSize()
 	return allocatedSize;
 }
 
-//other methods
+///other methods
+
 bool Memory::first_fit_allocate_check(Process process)
 {
 	bool returnable = false;
 
-	list<Segment> freeSegments = Segment::assignFree(memorySegmentsList);
-	this->freeSegmentsList.assign(freeSegments.begin(), freeSegments.end());
+	list<Segment> freeSegmentsList = Segment::filterFree(memorySegmentsList);
+	//this->freeSegmentsList.assign(freeSegmentsList.begin(), freeSegmentsList.end());
+	list<Segment> freeSegmentsListCopy;
+	freeSegmentsListCopy.assign(freeSegmentsList.begin(), freeSegmentsList.end());
 
 	list<Segment> processCopySegList;
 	processCopySegList.assign(process.segmentList.begin(), process.segmentList.end());
 
+
+	//corner cases
+	if (process.segmentList.empty())
+	{
+		cout << "Process is empty." << endl;
+		return returnable;
+
+	}
+
+	if (freeSegmentsList.empty())
+	{
+		cout << "No free segments in memory." << endl;
+		return returnable;
+	}
+
 	list<Segment>::iterator it0;
 	list<Segment>::iterator it1;
+
 	for (it0 = processCopySegList.begin(); it0 != processCopySegList.end(); ++it0)
 	{
-		list<Segment> returnedFree = Segment::assignFree(memorySegmentsList);
-		list<Segment> freeSegments;
-		freeSegments.assign(returnedFree.begin(), returnedFree.end());
-
-		for (it1 = freeSegments.begin(); it1 != freeSegments.end(); ++it1)
+		for (it1 = freeSegmentsListCopy.begin(); it1 != freeSegmentsListCopy.end(); ++it1)
 		{
-			if ((it1->getLimit() >= it0->getLimit()) && it1->getState() == Segment::free)
+			if ((it1->getLimit() >= it0->getLimit()) && (it1->getState() == Segment::free))
 			{
 				//set this segment as occupied
 				it1->setState(Segment::occupied);
 				//get size of free slot before occupation
-				long sizePrevSegment = it1->getLimit();
+				long sizeSegBeforeAlloc = it1->getLimit();
 				//set size of occupied slot to be equal to the size of the segment being inserted
 				it1->setLimit(it0->getLimit());
 				//calculate the base of the new free slot
@@ -71,39 +94,64 @@ bool Memory::first_fit_allocate_check(Process process)
 				//create a new slot, set its base, set its limit and mark it as a free slot
 				Segment newFreeSegment;
 				newFreeSegment.setBase(newSegmentBase);
-				newFreeSegment.setLimit((sizePrevSegment - it0->getLimit()));
+				newFreeSegment.setLimit((sizeSegBeforeAlloc - it0->getLimit()));
 				newFreeSegment.setState(Segment::free);
 				//insert the free slot right after the occupied slot
 				//new iterator it pointing at the next position
 				list<Segment>::iterator test = ++it1;
 				it1--;
-				if (test == freeSegments.end())
+				if (test == freeSegmentsListCopy.end())
 				{
-					freeSegments.push_back(newFreeSegment);
+					freeSegmentsListCopy.push_back(newFreeSegment);
 				}
 				else
 				{
-					freeSegments.insert(test, newFreeSegment);
+					freeSegmentsListCopy.insert(test, newFreeSegment);
 				}
-				processCopySegList.erase(it0);
+
+				list<Segment>::iterator test2 = ++it0;
+				it0--;
+				if (test2 == processCopySegList.end())
+				{
+					processCopySegList.pop_back();
+					break;
+				}
+				else
+				{
+					processCopySegList.erase(it0);
+				}
 				break;
 			}
-			else continue;
+			else
+			{
+				list<Segment>::iterator lastElementTest;
+				lastElementTest = ++it1;
+				it1--;
+
+				if (lastElementTest == freeSegmentsListCopy.end())
+				{
+					return returnable;
+				}
+				else
+					continue;
+			}
+
 		}
 	}
 	//if all segments can be allocated the copied list would be empty so return true
 	if (processCopySegList.empty())
 	{
 		returnable = true;
+		return returnable;
 	}
 	else return returnable;
 }
-bool Memory::first_fit_allocate(Process process)
+bool Memory::first_fit_allocate(Process &process)
 {
 	bool canBeAllocated = first_fit_allocate_check(process);
 	if (canBeAllocated)
 	{
-		list<Segment> freeSegments = Segment::assignFree(memorySegmentsList);
+		list<Segment> freeSegments = Segment::filterFree(memorySegmentsList);
 
 		list<Segment>::iterator it0;
 		list<Segment>::iterator it1;
@@ -113,6 +161,9 @@ bool Memory::first_fit_allocate(Process process)
 			{
 				if ((it1->getLimit() >= it0->getLimit()) && it1->getState() == Segment::free)
 				{
+					//base address to be stored
+					it0->setStoredBase(it1->getBase());
+					this->allocatedProcessesList.push_back(process);
 					//set this segment as occupied
 					it1->setState(Segment::occupied);
 					//get size of free slot before occupation
@@ -171,15 +222,17 @@ bool Memory::first_fit_allocate(Process process)
 	}
 	else return false;
 }
-
-//to be edited
-void Memory::allocateProcess(Process process)
+void Memory::printMemory()
 {
 	list<Segment>::iterator it;
-	for (it = process.segmentList.begin(); it != process.segmentList.end(); ++it)
+	for (it = this->memorySegmentsList.begin(); it != this->memorySegmentsList.end(); ++it)
 	{
-		allocatedSegmentsList.push_back(*it);
+		cout << "Segment ID = " << it->getID() << " Name: " << it->getName() << " State: " << it->getState() << " Base = " << it->getBase() << " Limit = " << it->getLimit() << endl;
 	}
+}
+void Memory::addSegment(Segment segment)
+{
+	memorySegmentsList.push_back(segment);
 }
 
 
