@@ -114,7 +114,7 @@ QPushButton:default {
 </string>
           </property>
           <property name="text">
-           <string>Assign Segments</string>
+           <string>Add Process</string>
           </property>
          </widget>
         </item>
