@@ -84,7 +84,7 @@ bool Memory::first_fit_allocate_check(Process process)
 
 		for (it1 = freeSegmentsListCopy.begin(); it1 != freeSegmentsListCopy.end(); ++it1)
 		{
-			if ((it1->getLimit() >= it0->getLimit()) && (it1->getState() == Segment::free))
+			if ((it1->getLimit() >= it0->getSize()) && (it1->getState() == Segment::free))
 			{
 				//mark this segment as allocated
 				it0->allocated = true;
@@ -326,7 +326,7 @@ bool Memory::best_fit_allocate_check(Process process)
 
 		for (it1 = freeSegmentsListCopy.begin(); it1 != freeSegmentsListCopy.end(); ++it1)
 		{
-			if ((it1->getLimit() >= it0->getLimit()) && (it1->getState() == Segment::free))
+			if ((it1->getLimit() >= it0->getSize()) && (it1->getState() == Segment::free))
 			{
 				//mark this segment as allocated
 				it0->allocated = true;
@@ -573,7 +573,7 @@ bool Memory::worst_fit_allocate_check(Process process)
 
 		for (it1 = freeSegmentsListCopy.begin(); it1 != freeSegmentsListCopy.end(); ++it1)
 		{
-			if ((it1->getLimit() >= it0->getLimit()) && (it1->getState() == Segment::free))
+			if ((it1->getLimit() >= it0->getSize()) && (it1->getState() == Segment::free))
 			{
 				//mark this segment as allocated
 				it0->allocated = true;
