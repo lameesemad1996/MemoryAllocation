@@ -6,104 +6,206 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>579</width>
-    <height>341</height>
+    <width>598</width>
+    <height>460</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(240, 239, 255);</string>
+   <string notr="true">QPushButton {
+    border: 2px solid #8f8f91;
+    border-radius:  6px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #f6f7fa, stop: 1 #dadbde);
+    min-width: 80px;
+}
+
+QPushButton:pressed {
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #dadbde, stop: 1 #f6f7fa);
+}
+
+QPushButton:flat {
+    border: none;
+}
+
+QPushButton:default {
+    border-color: navy;
+}</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QPushButton" name="pushButton_firstFit">
-      <property name="font">
-       <font>
-        <family>Bahnschrift SemiLight SemiConde</family>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-	border-radius: 6px;
-	border: 1px solid gray;
-	background-color: 	rgb(247, 207, 87);
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>90</y>
+      <width>451</width>
+      <height>291</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="holeDetailsVerticalLayout">
+     <property name="bottomMargin">
+      <number>20</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="holeDetailsLabel">
+       <property name="styleSheet">
+        <string notr="true">font: bold large &quot;Arial&quot;</string>
+       </property>
+       <property name="text">
+        <string>Hole Details</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="holeDetailsHorizontalLayout">
+       <item>
+        <widget class="QLabel" name="holeStartLabel_2">
+         <property name="styleSheet">
+          <string notr="true">font: large &quot;Arial&quot;</string>
+         </property>
+         <property name="text">
+          <string>Hole Start </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="holeStartSpinBox_2"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="holeSizeLabel_2">
+         <property name="styleSheet">
+          <string notr="true">font: large &quot;Arial&quot;</string>
+         </property>
+         <property name="text">
+          <string>Hole Size</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="holeSizeSpinBox_2"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="addHolePushButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    border: 2px solid #8f8f91;
+    border-radius:  6px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #f6f7fa, stop: 1 #dadbde);
+    min-width: 80px;
+	margin-bottom: 20px;
+	margin-top: 10px;
+	font: large &quot;Arial&quot;;
 }
+
 QPushButton:pressed {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #dadbde, stop: 1 #f6f7fa);
 }
 
-QPushButton:default {
-    border-color: navy; /* make the default button prominent */
-}</string>
-      </property>
-      <property name="text">
-       <string>First Fit</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_bestFit">
-      <property name="font">
-       <font>
-        <family>Bahnschrift SemiLight SemiConde</family>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-	background-color: 	rgb(153, 157, 237);
-	border: 1px solid gray;
-	border-radius: 6px;
-
+QPushButton:flat {
+    border: none;
 }
+
+QPushButton:default {
+    border-color: navy;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Add Hole</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTreeWidget" name="HoleTreeWidget">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <column>
+        <property name="text">
+         <string>ID</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Start Address</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Size</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>30</y>
+      <width>161</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="memorySizeHorizontalLayout">
+     <item>
+      <widget class="QLabel" name="memorySizeLabel">
+       <property name="styleSheet">
+        <string notr="true">font: bold large &quot;Arial&quot;</string>
+       </property>
+       <property name="text">
+        <string>Memory Size</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="memorySizeSpinBox"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="enterProcessesPushButton">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>390</y>
+      <width>111</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    border: 2px solid #8f8f91;
+    border-radius:  6px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #f6f7fa, stop: 1 #dadbde);
+    min-width: 80px;
+}
+
 QPushButton:pressed {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #dadbde, stop: 1 #f6f7fa);
 }
 
-QPushButton:default {
-    border-color: navy; /* make the default button prominent */
-}</string>
-      </property>
-      <property name="text">
-       <string>Best Fit</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_worstFit">
-      <property name="font">
-       <font>
-        <family>Bahnschrift SemiLight SemiConde</family>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-	border-radius: 6px;
-	border: 1px solid gray;
-	background-color: 	rgb(247, 207, 87);
-}
-QPushButton:pressed {
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #dadbde, stop: 1 #f6f7fa);
+QPushButton:flat {
+    border: none;
 }
 
 QPushButton:default {
-    border-color: navy; /* make the default button prominent */
+    border-color: navy;
 }</string>
-      </property>
-      <property name="text">
-       <string>Worst Fit</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+    </property>
+    <property name="text">
+     <string>Enter Proccesses</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

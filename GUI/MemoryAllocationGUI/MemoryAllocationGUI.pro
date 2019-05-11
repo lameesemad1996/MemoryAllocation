@@ -32,7 +32,6 @@ SOURCES += \
     Memoryy.cpp \
     Processs.cpp \
     Segmentt.cpp \
-    holessinputform.cpp \
     outputt.cpp
 
 HEADERS += \
@@ -43,13 +42,11 @@ HEADERS += \
     Memoryy.h \
     Processs.h \
     Segmentt.h \
-    holessinputform.h \
     outputt.h
 
 FORMS += \
         mainwindow.ui \
     processesinputform.ui \
-    holessinputform.ui \
     outputt.ui
 
 # Default rules for deployment.

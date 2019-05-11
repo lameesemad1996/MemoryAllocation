@@ -25,111 +25,98 @@ QT_BEGIN_NAMESPACE
 class Ui_holessinputform
 {
 public:
-    QPushButton *pushButton;
+    QPushButton *enterProcessesPushButton;
     QWidget *verticalLayoutWidget;
-    QVBoxLayout *verticalLayout;
-    QLabel *label_2;
-    QHBoxLayout *horizontalLayout_4;
-    QHBoxLayout *horizontalLayout_6;
-    QLabel *label_3;
-    QHBoxLayout *horizontalLayout_7;
-    QSpinBox *spinBox_3;
-    QLabel *label_4;
-    QSpinBox *spinBox_2;
-    QPushButton *pushButton_2;
-    QTreeWidget *treeWidget;
+    QVBoxLayout *holeDetailsVerticalLayout;
+    QLabel *holeDetailsLabel;
+    QHBoxLayout *holeDetailsHorizontalLayout;
+    QLabel *holeStartLabel_2;
+    QSpinBox *holeStartSpinBox_2;
+    QLabel *holeSizeLabel_2;
+    QSpinBox *holeSizeSpinBox_2;
+    QPushButton *addHolePushButton;
+    QTreeWidget *HoleTreeWidget;
     QWidget *horizontalLayoutWidget;
-    QHBoxLayout *horizontalLayout;
-    QLabel *label;
-    QSpinBox *spinBox;
+    QHBoxLayout *memorySizeHorizontalLayout;
+    QLabel *memorySizeLabel;
+    QSpinBox *memorySizeSpinBox;
 
     void setupUi(QWidget *holessinputform)
     {
         if (holessinputform->objectName().isEmpty())
             holessinputform->setObjectName(QString::fromUtf8("holessinputform"));
-        holessinputform->resize(564, 450);
-        pushButton = new QPushButton(holessinputform);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(220, 390, 111, 28));
-        pushButton->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
+        holessinputform->resize(791, 599);
+        enterProcessesPushButton = new QPushButton(holessinputform);
+        enterProcessesPushButton->setObjectName(QString::fromUtf8("enterProcessesPushButton"));
+        enterProcessesPushButton->setGeometry(QRect(220, 390, 111, 28));
+        enterProcessesPushButton->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
         verticalLayoutWidget = new QWidget(holessinputform);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
         verticalLayoutWidget->setGeometry(QRect(50, 90, 451, 291));
-        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        label_2 = new QLabel(verticalLayoutWidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setStyleSheet(QString::fromUtf8("font: bold large \"Arial\""));
+        holeDetailsVerticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        holeDetailsVerticalLayout->setObjectName(QString::fromUtf8("holeDetailsVerticalLayout"));
+        holeDetailsVerticalLayout->setContentsMargins(0, 0, 0, 0);
+        holeDetailsLabel = new QLabel(verticalLayoutWidget);
+        holeDetailsLabel->setObjectName(QString::fromUtf8("holeDetailsLabel"));
+        holeDetailsLabel->setStyleSheet(QString::fromUtf8("font: bold large \"Arial\""));
 
-        verticalLayout->addWidget(label_2);
+        holeDetailsVerticalLayout->addWidget(holeDetailsLabel);
 
-        horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        horizontalLayout_4->setContentsMargins(-1, -1, -1, 5);
-        horizontalLayout_6 = new QHBoxLayout();
-        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
-        label_3 = new QLabel(verticalLayoutWidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
+        holeDetailsHorizontalLayout = new QHBoxLayout();
+        holeDetailsHorizontalLayout->setObjectName(QString::fromUtf8("holeDetailsHorizontalLayout"));
+        holeStartLabel_2 = new QLabel(verticalLayoutWidget);
+        holeStartLabel_2->setObjectName(QString::fromUtf8("holeStartLabel_2"));
+        holeStartLabel_2->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
 
-        horizontalLayout_6->addWidget(label_3);
+        holeDetailsHorizontalLayout->addWidget(holeStartLabel_2);
 
-        horizontalLayout_7 = new QHBoxLayout();
-        horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
-        spinBox_3 = new QSpinBox(verticalLayoutWidget);
-        spinBox_3->setObjectName(QString::fromUtf8("spinBox_3"));
+        holeStartSpinBox_2 = new QSpinBox(verticalLayoutWidget);
+        holeStartSpinBox_2->setObjectName(QString::fromUtf8("holeStartSpinBox_2"));
 
-        horizontalLayout_7->addWidget(spinBox_3);
+        holeDetailsHorizontalLayout->addWidget(holeStartSpinBox_2);
 
+        holeSizeLabel_2 = new QLabel(verticalLayoutWidget);
+        holeSizeLabel_2->setObjectName(QString::fromUtf8("holeSizeLabel_2"));
+        holeSizeLabel_2->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
 
-        horizontalLayout_6->addLayout(horizontalLayout_7);
+        holeDetailsHorizontalLayout->addWidget(holeSizeLabel_2);
 
-        label_4 = new QLabel(verticalLayoutWidget);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
+        holeSizeSpinBox_2 = new QSpinBox(verticalLayoutWidget);
+        holeSizeSpinBox_2->setObjectName(QString::fromUtf8("holeSizeSpinBox_2"));
 
-        horizontalLayout_6->addWidget(label_4);
-
-        spinBox_2 = new QSpinBox(verticalLayoutWidget);
-        spinBox_2->setObjectName(QString::fromUtf8("spinBox_2"));
-
-        horizontalLayout_6->addWidget(spinBox_2);
+        holeDetailsHorizontalLayout->addWidget(holeSizeSpinBox_2);
 
 
-        horizontalLayout_4->addLayout(horizontalLayout_6);
+        holeDetailsVerticalLayout->addLayout(holeDetailsHorizontalLayout);
 
-
-        verticalLayout->addLayout(horizontalLayout_4);
-
-        pushButton_2 = new QPushButton(verticalLayoutWidget);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setStyleSheet(QString::fromUtf8("margin-bottom: 5px;\n"
+        addHolePushButton = new QPushButton(verticalLayoutWidget);
+        addHolePushButton->setObjectName(QString::fromUtf8("addHolePushButton"));
+        addHolePushButton->setStyleSheet(QString::fromUtf8("margin-bottom: 5px;\n"
 "font: large \"Arial\""));
 
-        verticalLayout->addWidget(pushButton_2);
+        holeDetailsVerticalLayout->addWidget(addHolePushButton);
 
-        treeWidget = new QTreeWidget(verticalLayoutWidget);
-        treeWidget->setObjectName(QString::fromUtf8("treeWidget"));
+        HoleTreeWidget = new QTreeWidget(verticalLayoutWidget);
+        HoleTreeWidget->setObjectName(QString::fromUtf8("HoleTreeWidget"));
 
-        verticalLayout->addWidget(treeWidget);
+        holeDetailsVerticalLayout->addWidget(HoleTreeWidget);
 
         horizontalLayoutWidget = new QWidget(holessinputform);
         horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
         horizontalLayoutWidget->setGeometry(QRect(180, 30, 161, 51));
-        horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        label = new QLabel(horizontalLayoutWidget);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setStyleSheet(QString::fromUtf8("font: bold large \"Arial\""));
+        memorySizeHorizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
+        memorySizeHorizontalLayout->setObjectName(QString::fromUtf8("memorySizeHorizontalLayout"));
+        memorySizeHorizontalLayout->setContentsMargins(0, 0, 0, 0);
+        memorySizeLabel = new QLabel(horizontalLayoutWidget);
+        memorySizeLabel->setObjectName(QString::fromUtf8("memorySizeLabel"));
+        memorySizeLabel->setStyleSheet(QString::fromUtf8("font: bold large \"Arial\""));
 
-        horizontalLayout->addWidget(label);
+        memorySizeHorizontalLayout->addWidget(memorySizeLabel);
 
-        spinBox = new QSpinBox(horizontalLayoutWidget);
-        spinBox->setObjectName(QString::fromUtf8("spinBox"));
+        memorySizeSpinBox = new QSpinBox(horizontalLayoutWidget);
+        memorySizeSpinBox->setObjectName(QString::fromUtf8("memorySizeSpinBox"));
 
-        horizontalLayout->addWidget(spinBox);
+        memorySizeHorizontalLayout->addWidget(memorySizeSpinBox);
 
 
         retranslateUi(holessinputform);
@@ -140,16 +127,16 @@ public:
     void retranslateUi(QWidget *holessinputform)
     {
         holessinputform->setWindowTitle(QApplication::translate("holessinputform", "Form", nullptr));
-        pushButton->setText(QApplication::translate("holessinputform", "Go to Processes", nullptr));
-        label_2->setText(QApplication::translate("holessinputform", "Hole Details", nullptr));
-        label_3->setText(QApplication::translate("holessinputform", "Hole Start ", nullptr));
-        label_4->setText(QApplication::translate("holessinputform", "Hole Size", nullptr));
-        pushButton_2->setText(QApplication::translate("holessinputform", "Add Hole", nullptr));
-        QTreeWidgetItem *___qtreewidgetitem = treeWidget->headerItem();
+        enterProcessesPushButton->setText(QApplication::translate("holessinputform", "Enter Proccesses", nullptr));
+        holeDetailsLabel->setText(QApplication::translate("holessinputform", "Hole Details", nullptr));
+        holeStartLabel_2->setText(QApplication::translate("holessinputform", "Hole Start ", nullptr));
+        holeSizeLabel_2->setText(QApplication::translate("holessinputform", "Hole Size", nullptr));
+        addHolePushButton->setText(QApplication::translate("holessinputform", "Add Hole", nullptr));
+        QTreeWidgetItem *___qtreewidgetitem = HoleTreeWidget->headerItem();
         ___qtreewidgetitem->setText(2, QApplication::translate("holessinputform", "Size", nullptr));
         ___qtreewidgetitem->setText(1, QApplication::translate("holessinputform", "Start Address", nullptr));
         ___qtreewidgetitem->setText(0, QApplication::translate("holessinputform", "ID", nullptr));
-        label->setText(QApplication::translate("holessinputform", "Memory Size", nullptr));
+        memorySizeLabel->setText(QApplication::translate("holessinputform", "Memory Size", nullptr));
     } // retranslateUi
 
 };

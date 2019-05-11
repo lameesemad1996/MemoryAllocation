@@ -69,6 +69,7 @@ public:
 	/**Given a list of segments with assigned states, filters free segments into an output list of segments.
 	*/
 	list<Segment> static filterFree(list<Segment> segmentList);
+
 	void static printSegList(list<Segment> segmentList);
 	friend class Process;
 	friend class Memory;

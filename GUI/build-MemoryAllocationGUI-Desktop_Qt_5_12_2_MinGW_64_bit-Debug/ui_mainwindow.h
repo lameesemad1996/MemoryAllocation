@@ -11,8 +11,13 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpinBox>
+#include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -22,84 +27,168 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QVBoxLayout *verticalLayout;
-    QPushButton *pushButton_firstFit;
-    QPushButton *pushButton_bestFit;
-    QPushButton *pushButton_worstFit;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *holeDetailsVerticalLayout;
+    QLabel *holeDetailsLabel;
+    QHBoxLayout *holeDetailsHorizontalLayout;
+    QLabel *holeStartLabel_2;
+    QSpinBox *holeStartSpinBox_2;
+    QLabel *holeSizeLabel_2;
+    QSpinBox *holeSizeSpinBox_2;
+    QPushButton *addHolePushButton;
+    QTreeWidget *HoleTreeWidget;
+    QWidget *horizontalLayoutWidget;
+    QHBoxLayout *memorySizeHorizontalLayout;
+    QLabel *memorySizeLabel;
+    QSpinBox *memorySizeSpinBox;
+    QPushButton *enterProcessesPushButton;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(579, 341);
-        MainWindow->setStyleSheet(QString::fromUtf8("background-color: rgb(240, 239, 255);"));
+        MainWindow->resize(598, 460);
+        MainWindow->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    border: 2px solid #8f8f91;\n"
+"    border-radius:  6px;\n"
+"    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
+"                                      stop: 0 #f6f7fa, stop: 1 #dadbde);\n"
+"    min-width: 80px;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
+"                                      stop: 0 #dadbde, stop: 1 #f6f7fa);\n"
+"}\n"
+"\n"
+"QPushButton:flat {\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"QPushButton:default {\n"
+"    border-color: navy;\n"
+"}"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        verticalLayout = new QVBoxLayout(centralWidget);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        pushButton_firstFit = new QPushButton(centralWidget);
-        pushButton_firstFit->setObjectName(QString::fromUtf8("pushButton_firstFit"));
-        QFont font;
-        font.setFamily(QString::fromUtf8("Bahnschrift SemiLight SemiConde"));
-        font.setPointSize(14);
-        pushButton_firstFit->setFont(font);
-        pushButton_firstFit->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"	border-radius: 6px;\n"
-"	border: 1px solid gray;\n"
-"	background-color: 	rgb(247, 207, 87);\n"
+        verticalLayoutWidget = new QWidget(centralWidget);
+        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(70, 90, 451, 291));
+        holeDetailsVerticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        holeDetailsVerticalLayout->setSpacing(6);
+        holeDetailsVerticalLayout->setContentsMargins(11, 11, 11, 11);
+        holeDetailsVerticalLayout->setObjectName(QString::fromUtf8("holeDetailsVerticalLayout"));
+        holeDetailsVerticalLayout->setContentsMargins(0, 0, 0, 20);
+        holeDetailsLabel = new QLabel(verticalLayoutWidget);
+        holeDetailsLabel->setObjectName(QString::fromUtf8("holeDetailsLabel"));
+        holeDetailsLabel->setStyleSheet(QString::fromUtf8("font: bold large \"Arial\""));
+
+        holeDetailsVerticalLayout->addWidget(holeDetailsLabel);
+
+        holeDetailsHorizontalLayout = new QHBoxLayout();
+        holeDetailsHorizontalLayout->setSpacing(6);
+        holeDetailsHorizontalLayout->setObjectName(QString::fromUtf8("holeDetailsHorizontalLayout"));
+        holeStartLabel_2 = new QLabel(verticalLayoutWidget);
+        holeStartLabel_2->setObjectName(QString::fromUtf8("holeStartLabel_2"));
+        holeStartLabel_2->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
+
+        holeDetailsHorizontalLayout->addWidget(holeStartLabel_2);
+
+        holeStartSpinBox_2 = new QSpinBox(verticalLayoutWidget);
+        holeStartSpinBox_2->setObjectName(QString::fromUtf8("holeStartSpinBox_2"));
+
+        holeDetailsHorizontalLayout->addWidget(holeStartSpinBox_2);
+
+        holeSizeLabel_2 = new QLabel(verticalLayoutWidget);
+        holeSizeLabel_2->setObjectName(QString::fromUtf8("holeSizeLabel_2"));
+        holeSizeLabel_2->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
+
+        holeDetailsHorizontalLayout->addWidget(holeSizeLabel_2);
+
+        holeSizeSpinBox_2 = new QSpinBox(verticalLayoutWidget);
+        holeSizeSpinBox_2->setObjectName(QString::fromUtf8("holeSizeSpinBox_2"));
+
+        holeDetailsHorizontalLayout->addWidget(holeSizeSpinBox_2);
+
+
+        holeDetailsVerticalLayout->addLayout(holeDetailsHorizontalLayout);
+
+        addHolePushButton = new QPushButton(verticalLayoutWidget);
+        addHolePushButton->setObjectName(QString::fromUtf8("addHolePushButton"));
+        addHolePushButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    border: 2px solid #8f8f91;\n"
+"    border-radius:  6px;\n"
+"    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
+"                                      stop: 0 #f6f7fa, stop: 1 #dadbde);\n"
+"    min-width: 80px;\n"
+"	margin-bottom: 20px;\n"
+"	margin-top: 10px;\n"
+"	font: large \"Arial\";\n"
 "}\n"
+"\n"
 "QPushButton:pressed {\n"
 "    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
 "                                      stop: 0 #dadbde, stop: 1 #f6f7fa);\n"
 "}\n"
 "\n"
-"QPushButton:default {\n"
-"    border-color: navy; /* make the default button prominent */\n"
-"}"));
-
-        verticalLayout->addWidget(pushButton_firstFit);
-
-        pushButton_bestFit = new QPushButton(centralWidget);
-        pushButton_bestFit->setObjectName(QString::fromUtf8("pushButton_bestFit"));
-        pushButton_bestFit->setFont(font);
-        pushButton_bestFit->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"	background-color: 	rgb(153, 157, 237);\n"
-"	border: 1px solid gray;\n"
-"	border-radius: 6px;\n"
-"\n"
+"QPushButton:flat {\n"
+"    border: none;\n"
 "}\n"
+"\n"
+"QPushButton:default {\n"
+"    border-color: navy;\n"
+"}\n"
+""));
+
+        holeDetailsVerticalLayout->addWidget(addHolePushButton);
+
+        HoleTreeWidget = new QTreeWidget(verticalLayoutWidget);
+        HoleTreeWidget->setObjectName(QString::fromUtf8("HoleTreeWidget"));
+        HoleTreeWidget->setStyleSheet(QString::fromUtf8(""));
+
+        holeDetailsVerticalLayout->addWidget(HoleTreeWidget);
+
+        horizontalLayoutWidget = new QWidget(centralWidget);
+        horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
+        horizontalLayoutWidget->setGeometry(QRect(200, 30, 161, 51));
+        memorySizeHorizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
+        memorySizeHorizontalLayout->setSpacing(6);
+        memorySizeHorizontalLayout->setContentsMargins(11, 11, 11, 11);
+        memorySizeHorizontalLayout->setObjectName(QString::fromUtf8("memorySizeHorizontalLayout"));
+        memorySizeHorizontalLayout->setContentsMargins(0, 0, 0, 0);
+        memorySizeLabel = new QLabel(horizontalLayoutWidget);
+        memorySizeLabel->setObjectName(QString::fromUtf8("memorySizeLabel"));
+        memorySizeLabel->setStyleSheet(QString::fromUtf8("font: bold large \"Arial\""));
+
+        memorySizeHorizontalLayout->addWidget(memorySizeLabel);
+
+        memorySizeSpinBox = new QSpinBox(horizontalLayoutWidget);
+        memorySizeSpinBox->setObjectName(QString::fromUtf8("memorySizeSpinBox"));
+
+        memorySizeHorizontalLayout->addWidget(memorySizeSpinBox);
+
+        enterProcessesPushButton = new QPushButton(centralWidget);
+        enterProcessesPushButton->setObjectName(QString::fromUtf8("enterProcessesPushButton"));
+        enterProcessesPushButton->setGeometry(QRect(240, 390, 111, 28));
+        enterProcessesPushButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    border: 2px solid #8f8f91;\n"
+"    border-radius:  6px;\n"
+"    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
+"                                      stop: 0 #f6f7fa, stop: 1 #dadbde);\n"
+"    min-width: 80px;\n"
+"}\n"
+"\n"
 "QPushButton:pressed {\n"
 "    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
 "                                      stop: 0 #dadbde, stop: 1 #f6f7fa);\n"
 "}\n"
 "\n"
-"QPushButton:default {\n"
-"    border-color: navy; /* make the default button prominent */\n"
-"}"));
-
-        verticalLayout->addWidget(pushButton_bestFit);
-
-        pushButton_worstFit = new QPushButton(centralWidget);
-        pushButton_worstFit->setObjectName(QString::fromUtf8("pushButton_worstFit"));
-        pushButton_worstFit->setFont(font);
-        pushButton_worstFit->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"	border-radius: 6px;\n"
-"	border: 1px solid gray;\n"
-"	background-color: 	rgb(247, 207, 87);\n"
-"}\n"
-"QPushButton:pressed {\n"
-"    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
-"                                      stop: 0 #dadbde, stop: 1 #f6f7fa);\n"
+"QPushButton:flat {\n"
+"    border: none;\n"
 "}\n"
 "\n"
 "QPushButton:default {\n"
-"    border-color: navy; /* make the default button prominent */\n"
+"    border-color: navy;\n"
 "}"));
-
-        verticalLayout->addWidget(pushButton_worstFit);
-
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -110,9 +199,16 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        pushButton_firstFit->setText(QApplication::translate("MainWindow", "First Fit", nullptr));
-        pushButton_bestFit->setText(QApplication::translate("MainWindow", "Best Fit", nullptr));
-        pushButton_worstFit->setText(QApplication::translate("MainWindow", "Worst Fit", nullptr));
+        holeDetailsLabel->setText(QApplication::translate("MainWindow", "Hole Details", nullptr));
+        holeStartLabel_2->setText(QApplication::translate("MainWindow", "Hole Start ", nullptr));
+        holeSizeLabel_2->setText(QApplication::translate("MainWindow", "Hole Size", nullptr));
+        addHolePushButton->setText(QApplication::translate("MainWindow", "Add Hole", nullptr));
+        QTreeWidgetItem *___qtreewidgetitem = HoleTreeWidget->headerItem();
+        ___qtreewidgetitem->setText(2, QApplication::translate("MainWindow", "Size", nullptr));
+        ___qtreewidgetitem->setText(1, QApplication::translate("MainWindow", "Start Address", nullptr));
+        ___qtreewidgetitem->setText(0, QApplication::translate("MainWindow", "ID", nullptr));
+        memorySizeLabel->setText(QApplication::translate("MainWindow", "Memory Size", nullptr));
+        enterProcessesPushButton->setText(QApplication::translate("MainWindow", "Enter Proccesses", nullptr));
     } // retranslateUi
 
 };
