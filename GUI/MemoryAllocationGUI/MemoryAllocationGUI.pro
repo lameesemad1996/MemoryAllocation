@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,18 +28,29 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    holesinputform.cpp \
-    processesinputform.cpp
+    processesinputform.cpp \
+    Memoryy.cpp \
+    Processs.cpp \
+    Segmentt.cpp \
+    holessinputform.cpp \
+    outputt.cpp
 
 HEADERS += \
         mainwindow.h \
-    holesinputform.h \
-    processesinputform.h
+    processesinputform.h \
+    output.h \
+    Includess.h \
+    Memoryy.h \
+    Processs.h \
+    Segmentt.h \
+    holessinputform.h \
+    outputt.h
 
 FORMS += \
         mainwindow.ui \
-    holesinputform.ui \
-    processesinputform.ui
+    processesinputform.ui \
+    holessinputform.ui \
+    outputt.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

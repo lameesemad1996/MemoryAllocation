@@ -1,0 +1,12 @@
+debug/main.o
+debug/mainwindow.o
+debug/processesinputform.o
+debug/Memoryy.o
+debug/Processs.o
+debug/Segmentt.o
+debug/holessinputform.o
+debug/outputt.o
+debug/moc_mainwindow.o
+debug/moc_processesinputform.o
+debug/moc_holessinputform.o
+debug/moc_outputt.o

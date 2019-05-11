@@ -1,0 +1,12 @@
+release/main.o
+release/mainwindow.o
+release/processesinputform.o
+release/Memoryy.o
+release/Processs.o
+release/Segmentt.o
+release/holessinputform.o
+release/outputt.o
+release/moc_mainwindow.o
+release/moc_processesinputform.o
+release/moc_holessinputform.o
+release/moc_outputt.o
