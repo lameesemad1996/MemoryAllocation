@@ -145,6 +145,20 @@ list<Segment> Segment::filterFree(list<Segment> segmentList)
 	}
 	return returnable;
 }
+list<Segment> Segment::filterOldProcess(list<Segment> segmentList)
+{
+    list<Segment> returnable;
+    list<Segment>::iterator it;
+    for (it = segmentList.begin(); it != segmentList.end(); ++it)
+    {
+        if (it->getState() == 2)
+        {
+            returnable.push_back(*it);
+        }
+        else continue;
+    }
+    return returnable;
+}
 list<Segment> Segment::collect(list<Segment> &memorySegmentsList)
 {
 	sortSegListByBaseAdd_ascending(memorySegmentsList);

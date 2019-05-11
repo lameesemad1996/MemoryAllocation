@@ -5,6 +5,8 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QTreeWidgetItemIterator>
+#include "outputt.h"
+#include "Segmentt.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -13,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->holeStartSpinBox_2->setRange(0,10000000);
     ui->holeSizeSpinBox_2->setRange(0,10000000);
+    ui->memorySizeSpinBox->setRange(0,10000000);
     totalHoleSize = 0;
 }
 
@@ -152,8 +155,10 @@ void MainWindow::on_enterProcessesPushButton_clicked()
 {
     long memSize = ui->memorySizeSpinBox->value();
     this->myMem = fillOldProcess(holesList, memSize, this->invalidTotalMemSizeFlag);
+    this->oldProcessList = Segment::filterOldProcess(myMem.memorySegmentsList);
+    Outputt::showOP(myMem, memSize/20);
     processesinputform* processInputForm = new processesinputform();
-    processInputForm->setFixedSize(800,600);
+    processInputForm->setFixedSize(600,580);
     QMainWindow* processWindowPtr = new QMainWindow();
     processWindowPtr->setWindowModality(Qt::WindowModal);
     processWindowPtr->setCentralWidget(processInputForm);

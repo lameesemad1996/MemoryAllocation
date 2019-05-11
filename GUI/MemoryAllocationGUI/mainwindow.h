@@ -18,6 +18,7 @@ public:
     ~MainWindow();
     Memory myMem;
     list<Segment> holesList;
+    list<Segment> oldProcessList;
     long totalHoleSize;
     bool invalidTotalMemSizeFlag;
     Memory fillOldProcess(list<Segment> holesSegList, long memSize, bool &invalidTotalMemSizeFlag);

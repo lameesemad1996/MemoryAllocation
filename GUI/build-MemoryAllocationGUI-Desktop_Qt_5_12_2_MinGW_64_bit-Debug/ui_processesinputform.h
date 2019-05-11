@@ -51,7 +51,7 @@ public:
     {
         if (processesinputform->objectName().isEmpty())
             processesinputform->setObjectName(QString::fromUtf8("processesinputform"));
-        processesinputform->resize(800, 600);
+        processesinputform->resize(600, 580);
         processesinputform->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    border: 2px solid #8f8f91;\n"
 "    border-radius:  6px;\n"
@@ -74,7 +74,7 @@ public:
 "}"));
         verticalLayoutWidget = new QWidget(processesinputform);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(20, 40, 761, 501));
+        verticalLayoutWidget->setGeometry(QRect(20, 20, 561, 501));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -222,7 +222,7 @@ public:
         pushButton_3 = new QPushButton(processesinputform);
         pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
         pushButton_3->setEnabled(false);
-        pushButton_3->setGeometry(QRect(340, 550, 111, 28));
+        pushButton_3->setGeometry(QRect(250, 530, 111, 28));
         QFont font;
         font.setFamily(QString::fromUtf8("Arial"));
         font.setBold(false);
@@ -247,11 +247,9 @@ public:
         label_6->setText(QApplication::translate("processesinputform", "Segment Size", nullptr));
         pushButton_2->setText(QApplication::translate("processesinputform", "Add Segment", nullptr));
         QTreeWidgetItem *___qtreewidgetitem = treeWidget_2->headerItem();
-        ___qtreewidgetitem->setText(5, QApplication::translate("processesinputform", "Segment Size", nullptr));
-        ___qtreewidgetitem->setText(4, QApplication::translate("processesinputform", "Segment Name", nullptr));
-        ___qtreewidgetitem->setText(3, QApplication::translate("processesinputform", "Segment ID", nullptr));
-        ___qtreewidgetitem->setText(2, QApplication::translate("processesinputform", "Deallocate", nullptr));
-        ___qtreewidgetitem->setText(1, QApplication::translate("processesinputform", "Allocate", nullptr));
+        ___qtreewidgetitem->setText(3, QApplication::translate("processesinputform", "Segment Size", nullptr));
+        ___qtreewidgetitem->setText(2, QApplication::translate("processesinputform", "Segment Name", nullptr));
+        ___qtreewidgetitem->setText(1, QApplication::translate("processesinputform", "Segment ID", nullptr));
         ___qtreewidgetitem->setText(0, QApplication::translate("processesinputform", "Process ID", nullptr));
         pushButton_3->setText(QApplication::translate("processesinputform", "GO", nullptr));
     } // retranslateUi

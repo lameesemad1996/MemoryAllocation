@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>600</width>
+    <height>580</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,8 +39,8 @@ QPushButton:default {
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>40</y>
-     <width>761</width>
+     <y>20</y>
+     <width>561</width>
      <height>501</height>
     </rect>
    </property>
@@ -208,16 +208,6 @@ QPushButton:default {
       </column>
       <column>
        <property name="text">
-        <string>Allocate</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Deallocate</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
         <string>Segment ID</string>
        </property>
       </column>
@@ -241,8 +231,8 @@ QPushButton:default {
    </property>
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>550</y>
+     <x>250</x>
+     <y>530</y>
      <width>111</width>
      <height>28</height>
     </rect>

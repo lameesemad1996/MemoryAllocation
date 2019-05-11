@@ -29,7 +29,7 @@ class Outputt : public QWidget
 public:
     explicit Outputt(QWidget *parent = nullptr);
     ~Outputt();
-    void static showOP(Memory myMem);
+    void static showOP(Memory myMem, long tickInterval);
     list<Process> static getInputs();
     list<Segment> static getOP(Memory myMem);
     static QMainWindow window;

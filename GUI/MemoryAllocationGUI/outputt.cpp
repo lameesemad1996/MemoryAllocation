@@ -50,7 +50,7 @@ list<Segment> Outputt::getOP(Memory myMem)
     return myMem.memorySegmentsList;
 }
 
-void Outputt::showOP(Memory myMem)
+void Outputt::showOP(Memory myMem, long tickInterval)
 {
     list<Segment> opList;
     opList = getOP(myMem);
@@ -88,13 +88,13 @@ void Outputt::showOP(Memory myMem)
     //chart creation
     QtCharts::QChart *chart = new QtCharts::QChart();
     chart->addSeries(series);
-    chart->setTitle("Memory Content");
+    chart->setTitle("Memory Contents");
 
     QtCharts::QValueAxis *axisY = new QtCharts::QValueAxis();
     axisY->setTickType(QtCharts::QValueAxis::TickType::TicksDynamic);
-    axisY->setTickInterval(1);
+    axisY->setTickInterval(tickInterval);
     axisY->setTickAnchor(0);
-    chart->addAxis(axisY, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisY);
 
     //legend
