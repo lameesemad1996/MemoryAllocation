@@ -312,7 +312,7 @@ font: large &quot;Arial&quot;</string>
     <item>
      <widget class="QPushButton" name="drawPushButton">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="font">
        <font>
@@ -327,7 +327,7 @@ font: large &quot;Arial&quot;</string>
        <string notr="true">font: large &quot;Arial&quot;</string>
       </property>
       <property name="text">
-       <string>Draw</string>
+       <string>Show</string>
       </property>
      </widget>
     </item>

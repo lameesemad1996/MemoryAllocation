@@ -14,6 +14,7 @@ Segment::Segment(string name)
 	SEGMENT_ID++;
 	setName(name);
 	allocated = false;
+    parentProcessId = -1;
 }
 
 Segment::Segment(string name, long size)
@@ -23,6 +24,7 @@ Segment::Segment(string name, long size)
 	setName(name);
 	setSize(size);
 	allocated = false;
+    parentProcessId = -1;
 }
 Segment::Segment(string name, long base, long limit, Segment::segmentState state)
 {
@@ -33,6 +35,7 @@ Segment::Segment(string name, long base, long limit, Segment::segmentState state
 	setLimit(limit);
 	setState(state);
 	allocated = false;
+    parentProcessId = -1;
 }
 
 Segment::~Segment()

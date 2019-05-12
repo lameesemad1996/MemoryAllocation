@@ -271,7 +271,7 @@ public:
 
         drawPushButton = new QPushButton(verticalLayoutWidget_2);
         drawPushButton->setObjectName(QString::fromUtf8("drawPushButton"));
-        drawPushButton->setEnabled(false);
+        drawPushButton->setEnabled(true);
         drawPushButton->setFont(font);
         drawPushButton->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
 
@@ -312,7 +312,7 @@ public:
         worstFitCheckBox->setText(QApplication::translate("processesinputform", "Worst Fit", nullptr));
         allocatePushButton->setText(QApplication::translate("processesinputform", "Allocate", nullptr));
         deallocatePushButton->setText(QApplication::translate("processesinputform", "Deallocate", nullptr));
-        drawPushButton->setText(QApplication::translate("processesinputform", "Draw", nullptr));
+        drawPushButton->setText(QApplication::translate("processesinputform", "Show", nullptr));
         QTreeWidgetItem *___qtreewidgetitem1 = oldProcessTreeWidget->headerItem();
         ___qtreewidgetitem1->setText(4, QApplication::translate("processesinputform", "Segment Size", nullptr));
         ___qtreewidgetitem1->setText(3, QApplication::translate("processesinputform", "Start Address", nullptr));

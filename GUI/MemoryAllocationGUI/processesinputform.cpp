@@ -220,10 +220,15 @@ void processesinputform::on_deallocatePushButton_clicked()
 {
     QTreeWidgetItem* selectedItemPtr = ui->processSegmentTreeWidget->currentItem();
     QTreeWidgetItem* selectedOldItemPtr = ui->oldProcessTreeWidget->currentItem();
+    QString allocated = "False";
 
     if(selectedItemPtr == nullptr)
     {
         QMessageBox::information(this,tr("Cannot Allocate"),tr("Please select a process to deallocate"));
+    }
+    else if (selectedItemPtr->data(2,0).toString() == allocated)
+    {
+        QMessageBox::information(this,tr("Cannot Deallocate"),tr("This process is already deallocated"));
     }
     /*else if (selectedOldItemPtr != nullptr)
     {
@@ -257,7 +262,7 @@ void processesinputform::on_deallocatePushButton_clicked()
 
 void processesinputform::on_drawPushButton_clicked()
 {
-
+    Outputt::showOP(MainWindow::instance()->myMem, (MainWindow::instance()->myMem.getSize())/20);
 }
 
 void processesinputform::on_firstFitCheckBox_stateChanged()
