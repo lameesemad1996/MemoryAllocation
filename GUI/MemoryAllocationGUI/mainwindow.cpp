@@ -8,11 +8,18 @@
 #include "outputt.h"
 #include "Segmentt.h"
 
+MainWindow* MainWindow::s_instance = nullptr;
+
+MainWindow* MainWindow::instance() { return s_instance; }
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    assert(!s_instance); //another instance already exists!
+    s_instance = this;
+    //MainWindow::mainWindowPtr = this;
     ui->holeStartSpinBox_2->setRange(0,10000000);
     ui->holeSizeSpinBox_2->setRange(0,10000000);
     ui->memorySizeSpinBox->setRange(0,10000000);
@@ -26,7 +33,7 @@ MainWindow::~MainWindow()
 
 Memory MainWindow::fillOldProcess(list<Segment> holesSegList, long memSize, bool &invalidTotalMemSizeFlag)
 {
-    Memory returnable;
+        Memory returnable;
         returnable.setSize(memSize);
         long ID = 0;
 
@@ -34,6 +41,8 @@ Memory MainWindow::fillOldProcess(list<Segment> holesSegList, long memSize, bool
         if (holesSegList.empty())
         {
             Segment newOldProSeg("Old Process", 0, memSize, Segment::oldProcess);
+            newOldProSeg.setAllocated(true);
+            returnable.OldProcessSegmentsList.push_back(newOldProSeg);
             returnable.memorySegmentsList.push_back(newOldProSeg);
             return returnable;
         }
@@ -64,6 +73,8 @@ Memory MainWindow::fillOldProcess(list<Segment> holesSegList, long memSize, bool
                     Segment newOldProSeg("Old Process", 0, it->getBase(), Segment::oldProcess);
                     lastAllocAdd = it->getBase() + it->getLimit();
                     newOldProSeg.setID(ID);
+                    newOldProSeg.setAllocated(true);
+                    returnable.OldProcessSegmentsList.push_back(newOldProSeg);
                     returnable.memorySegmentsList.push_back(newOldProSeg);
                     it->setID(ID + 1);
                     returnable.memorySegmentsList.push_back(*it);
@@ -105,6 +116,8 @@ Memory MainWindow::fillOldProcess(list<Segment> holesSegList, long memSize, bool
                 {
                     Segment newOldProSeg("Old Process", lastAllocAdd, currentBase - lastAllocAdd, Segment::oldProcess);
                     newOldProSeg.setID(ID);
+                    newOldProSeg.setAllocated(true);
+                    returnable.OldProcessSegmentsList.push_back(newOldProSeg);
                     returnable.memorySegmentsList.push_back(newOldProSeg);
                     it->setID(ID + 1);
                     returnable.memorySegmentsList.push_back(*it);
@@ -128,8 +141,9 @@ Memory MainWindow::fillOldProcess(list<Segment> holesSegList, long memSize, bool
         else if (lastAllocAdd < memSize - 1)
         {
             Segment newOldProSeg("Old Process", lastAllocAdd, memSize - lastAllocAdd, Segment::oldProcess);
-                //, memSize - lastAddress , Segment::oldProcess);
             newOldProSeg.setID(ID);
+            newOldProSeg.setAllocated(true);
+            returnable.OldProcessSegmentsList.push_back(newOldProSeg);
             returnable.memorySegmentsList.push_back(newOldProSeg);
         }
         return returnable;
@@ -142,11 +156,11 @@ void MainWindow::on_addHolePushButton_clicked()
     totalHoleSize += holeSize;
     Segment newhole("Free", holeStartAddress, holeSize, Segment::free);
     holesList.push_back(newhole);
-    QTreeWidgetItem *newHole = new QTreeWidgetItem(ui->HoleTreeWidget);
-    newHole->setText(0,QString::fromStdString(to_string(newhole.getID())));
-    newHole->setText(1,QString::fromStdString(to_string(newhole.getBase())));
-    newHole->setText(2,QString::fromStdString(to_string(newhole.getLimit())));
-    ui->HoleTreeWidget->addTopLevelItem(newHole);
+    QTreeWidgetItem *newHoleItem = new QTreeWidgetItem(ui->HoleTreeWidget);
+    newHoleItem->setText(0,QString::fromStdString(to_string(newhole.getID())));
+    newHoleItem->setText(1,QString::fromStdString(to_string(newhole.getBase())));
+    newHoleItem->setText(2,QString::fromStdString(to_string(newhole.getLimit())));
+    ui->HoleTreeWidget->addTopLevelItem(newHoleItem);
     ui->holeSizeSpinBox_2->setValue(0);
     ui->holeStartSpinBox_2->setValue(0);
 }
@@ -155,10 +169,10 @@ void MainWindow::on_enterProcessesPushButton_clicked()
 {
     long memSize = ui->memorySizeSpinBox->value();
     this->myMem = fillOldProcess(holesList, memSize, this->invalidTotalMemSizeFlag);
-    this->oldProcessList = Segment::filterOldProcess(myMem.memorySegmentsList);
-    Outputt::showOP(myMem, memSize/20);
+    //this->oldProcessList = Segment::filterOldProcess(myMem.memorySegmentsList);
+    //Outputt::showOP(myMem, memSize/20);
     processesinputform* processInputForm = new processesinputform();
-    processInputForm->setFixedSize(600,580);
+    processInputForm->setFixedSize(950,850);
     QMainWindow* processWindowPtr = new QMainWindow();
     processWindowPtr->setWindowModality(Qt::WindowModal);
     processWindowPtr->setCentralWidget(processInputForm);

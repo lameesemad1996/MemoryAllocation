@@ -12,6 +12,7 @@ private:
 public:
 	list<Process> allocatedProcessesList;
 	list<Segment> freeSegmentsList;
+    list<Segment> OldProcessSegmentsList;
 	list<Segment> allocatedSegmentsList;
 	list<Segment> memorySegmentsList;
 
@@ -66,4 +67,10 @@ public:
 	*Assigns the base what which a segment was allocated in the memory to the Segment attribute storedBase.
 	*/
 	bool worst_fit_allocate(Process &process);
+    /**Given a segmented process, removes all segments of the process from memory and marks the segment in the process.segmentList
+    *as deallocated.
+    */
+    void deallocate(Process &process);
+    void deallocate(Segment &seg);
+
 };

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QWidget>
 #include "Memoryy.h"
+#include <QColor>
 
 namespace Ui {
 class MainWindow;
@@ -16,12 +17,17 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    static MainWindow* instance();
+    //static QWidget* mainWindowPtr;
     Memory myMem;
     list<Segment> holesList;
-    list<Segment> oldProcessList;
+    //list<Segment> oldProcessList;
     long totalHoleSize;
     bool invalidTotalMemSizeFlag;
     Memory fillOldProcess(list<Segment> holesSegList, long memSize, bool &invalidTotalMemSizeFlag);
+
+private:
+    static MainWindow* s_instance;
 
 private slots:
 

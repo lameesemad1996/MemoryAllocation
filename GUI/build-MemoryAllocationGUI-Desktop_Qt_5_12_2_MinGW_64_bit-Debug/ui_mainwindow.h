@@ -149,7 +149,7 @@ public:
 
         horizontalLayoutWidget = new QWidget(centralWidget);
         horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(200, 30, 161, 51));
+        horizontalLayoutWidget->setGeometry(QRect(180, 30, 201, 51));
         memorySizeHorizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         memorySizeHorizontalLayout->setSpacing(6);
         memorySizeHorizontalLayout->setContentsMargins(11, 11, 11, 11);

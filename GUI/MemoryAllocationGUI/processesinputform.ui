@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>580</height>
+    <width>950</width>
+    <height>850</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,8 +40,8 @@ QPushButton:default {
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>561</width>
-     <height>501</height>
+     <width>761</width>
+     <height>481</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -55,7 +55,7 @@ QPushButton:default {
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_7">
           <item>
-           <widget class="QLabel" name="label_3">
+           <widget class="QLabel" name="processNameLabel">
             <property name="styleSheet">
              <string notr="true">font: large &quot;Arial&quot;</string>
             </property>
@@ -65,12 +65,12 @@ QPushButton:default {
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit"/>
+           <widget class="QLineEdit" name="processNameLineEdit"/>
           </item>
          </layout>
         </item>
         <item>
-         <widget class="QLabel" name="label_4">
+         <widget class="QLabel" name="noOfSegLabel">
           <property name="styleSheet">
            <string notr="true">font: large &quot;Arial&quot;</string>
           </property>
@@ -80,12 +80,12 @@ QPushButton:default {
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox_2"/>
+         <widget class="QSpinBox" name="noOfSegSpinBox"/>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="addProcessPushButton">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton {
@@ -130,7 +130,7 @@ QPushButton:default {
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_8">
         <item>
-         <widget class="QLabel" name="label_5">
+         <widget class="QLabel" name="segNameLabel">
           <property name="styleSheet">
            <string notr="true">font: large &quot;Arial&quot;</string>
           </property>
@@ -140,14 +140,10 @@ QPushButton:default {
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_9">
-          <item>
-           <widget class="QLineEdit" name="lineEdit_2"/>
-          </item>
-         </layout>
+         <widget class="QLineEdit" name="segNameLineEdit"/>
         </item>
         <item>
-         <widget class="QLabel" name="label_6">
+         <widget class="QLabel" name="segSizeLabel">
           <property name="styleSheet">
            <string notr="true">font: large &quot;Arial&quot;</string>
           </property>
@@ -157,12 +153,12 @@ QPushButton:default {
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox_3"/>
+         <widget class="QSpinBox" name="segSizeSpinBox"/>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="addSegmentPushButton">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton {
@@ -200,10 +196,20 @@ QPushButton:default {
      </layout>
     </item>
     <item>
-     <widget class="QTreeWidget" name="treeWidget_2">
+     <widget class="QTreeWidget" name="processSegmentTreeWidget">
       <column>
        <property name="text">
         <string>Process ID</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Process Name</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Allocated</string>
        </property>
       </column>
       <column>
@@ -225,32 +231,158 @@ QPushButton:default {
     </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
+  <widget class="QWidget" name="verticalLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>530</y>
-     <width>111</width>
-     <height>28</height>
+     <x>800</x>
+     <y>220</y>
+     <width>131</width>
+     <height>182</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <family>Arial</family>
-     <weight>50</weight>
-     <italic>false</italic>
-     <bold>false</bold>
-     <strikeout>false</strikeout>
-    </font>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QCheckBox" name="firstFitCheckBox">
+      <property name="text">
+       <string>First Fit</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="bestFitCheckBox">
+      <property name="text">
+       <string>Best Fit</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="worstFitCheckBox">
+      <property name="text">
+       <string>Worst Fit</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="allocatePushButton">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+        <strikeout>false</strikeout>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">margin-bottom: 10px;
+margin-top: 3px;
+font: large &quot;Arial&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Allocate</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="deallocatePushButton">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+        <strikeout>false</strikeout>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">margin-bottom: 10px;
+font: large &quot;Arial&quot;</string>
+      </property>
+      <property name="text">
+       <string>Deallocate</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="drawPushButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+        <strikeout>false</strikeout>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: large &quot;Arial&quot;</string>
+      </property>
+      <property name="text">
+       <string>Draw</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QTreeWidget" name="oldProcessTreeWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>560</y>
+     <width>631</width>
+     <height>261</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>Segment ID</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Segment Name</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Allocated</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Start Address</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Segment Size</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QLabel" name="oldProcessLabel">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>530</y>
+     <width>151</width>
+     <height>26</height>
+    </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: large &quot;Arial&quot;</string>
+    <string notr="true">font: large &quot;Arial&quot;;
+font-size: 14px;</string>
    </property>
    <property name="text">
-    <string>GO</string>
+    <string>Old Process Segments</string>
    </property>
   </widget>
  </widget>

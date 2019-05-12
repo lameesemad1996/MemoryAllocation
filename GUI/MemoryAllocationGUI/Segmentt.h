@@ -12,6 +12,7 @@ private:
 	long storedBase;
 	long size;
 	bool allocated;
+    long parentProcessId;
 
 public:
 	//static const string enumToString[3] = { "free", "occupied", "oldProcess" };
@@ -32,6 +33,8 @@ public:
 	void setLimit(long limit);
 	void setSize(long size);
 	void setName(string name);
+    void setParentProcessId(long id);
+    void setAllocated(bool allocated);
 
 	///get methods
 	long getID();
@@ -39,6 +42,7 @@ public:
 	long getBase();
 	long getSize();
 	long getStoredBase();
+    long getParentProcessId();
 	string getName();
 	segmentState getState();
 	void markAsOldProcess(long base, long size);
@@ -66,6 +70,7 @@ public:
 	/**Given a list of segments having base and limits assigned, sorts a list of segments and merges between consecutive segments.
 	*/
 	list<Segment> static collect(list<Segment> &memorySegmentsList);
+    list<Segment> static collectFree(list<Segment> &memorySegmentsList);
 	/**Given a list of segments with assigned states, filters free segments into an output list of segments.
 	*/
 	list<Segment> static filterFree(list<Segment> segmentList);

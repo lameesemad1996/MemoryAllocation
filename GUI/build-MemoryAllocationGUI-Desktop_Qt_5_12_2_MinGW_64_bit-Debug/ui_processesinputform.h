@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -31,27 +32,35 @@ public:
     QHBoxLayout *horizontalLayout_4;
     QHBoxLayout *horizontalLayout_6;
     QHBoxLayout *horizontalLayout_7;
-    QLabel *label_3;
-    QLineEdit *lineEdit;
-    QLabel *label_4;
-    QSpinBox *spinBox_2;
-    QPushButton *pushButton;
+    QLabel *processNameLabel;
+    QLineEdit *processNameLineEdit;
+    QLabel *noOfSegLabel;
+    QSpinBox *noOfSegSpinBox;
+    QPushButton *addProcessPushButton;
     QHBoxLayout *horizontalLayout_5;
     QHBoxLayout *horizontalLayout_8;
-    QLabel *label_5;
-    QHBoxLayout *horizontalLayout_9;
-    QLineEdit *lineEdit_2;
-    QLabel *label_6;
-    QSpinBox *spinBox_3;
-    QPushButton *pushButton_2;
-    QTreeWidget *treeWidget_2;
-    QPushButton *pushButton_3;
+    QLabel *segNameLabel;
+    QLineEdit *segNameLineEdit;
+    QLabel *segSizeLabel;
+    QSpinBox *segSizeSpinBox;
+    QPushButton *addSegmentPushButton;
+    QTreeWidget *processSegmentTreeWidget;
+    QWidget *verticalLayoutWidget_2;
+    QVBoxLayout *verticalLayout_2;
+    QCheckBox *firstFitCheckBox;
+    QCheckBox *bestFitCheckBox;
+    QCheckBox *worstFitCheckBox;
+    QPushButton *allocatePushButton;
+    QPushButton *deallocatePushButton;
+    QPushButton *drawPushButton;
+    QTreeWidget *oldProcessTreeWidget;
+    QLabel *oldProcessLabel;
 
     void setupUi(QWidget *processesinputform)
     {
         if (processesinputform->objectName().isEmpty())
             processesinputform->setObjectName(QString::fromUtf8("processesinputform"));
-        processesinputform->resize(600, 580);
+        processesinputform->resize(950, 850);
         processesinputform->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    border: 2px solid #8f8f91;\n"
 "    border-radius:  6px;\n"
@@ -74,7 +83,7 @@ public:
 "}"));
         verticalLayoutWidget = new QWidget(processesinputform);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(20, 20, 561, 501));
+        verticalLayoutWidget->setGeometry(QRect(20, 20, 761, 481));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -85,35 +94,35 @@ public:
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
         horizontalLayout_7 = new QHBoxLayout();
         horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
-        label_3 = new QLabel(verticalLayoutWidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
+        processNameLabel = new QLabel(verticalLayoutWidget);
+        processNameLabel->setObjectName(QString::fromUtf8("processNameLabel"));
+        processNameLabel->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
 
-        horizontalLayout_7->addWidget(label_3);
+        horizontalLayout_7->addWidget(processNameLabel);
 
-        lineEdit = new QLineEdit(verticalLayoutWidget);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        processNameLineEdit = new QLineEdit(verticalLayoutWidget);
+        processNameLineEdit->setObjectName(QString::fromUtf8("processNameLineEdit"));
 
-        horizontalLayout_7->addWidget(lineEdit);
+        horizontalLayout_7->addWidget(processNameLineEdit);
 
 
         horizontalLayout_6->addLayout(horizontalLayout_7);
 
-        label_4 = new QLabel(verticalLayoutWidget);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
+        noOfSegLabel = new QLabel(verticalLayoutWidget);
+        noOfSegLabel->setObjectName(QString::fromUtf8("noOfSegLabel"));
+        noOfSegLabel->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
 
-        horizontalLayout_6->addWidget(label_4);
+        horizontalLayout_6->addWidget(noOfSegLabel);
 
-        spinBox_2 = new QSpinBox(verticalLayoutWidget);
-        spinBox_2->setObjectName(QString::fromUtf8("spinBox_2"));
+        noOfSegSpinBox = new QSpinBox(verticalLayoutWidget);
+        noOfSegSpinBox->setObjectName(QString::fromUtf8("noOfSegSpinBox"));
 
-        horizontalLayout_6->addWidget(spinBox_2);
+        horizontalLayout_6->addWidget(noOfSegSpinBox);
 
-        pushButton = new QPushButton(verticalLayoutWidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setEnabled(false);
-        pushButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+        addProcessPushButton = new QPushButton(verticalLayoutWidget);
+        addProcessPushButton->setObjectName(QString::fromUtf8("addProcessPushButton"));
+        addProcessPushButton->setEnabled(true);
+        addProcessPushButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    border: 2px solid #8f8f91;\n"
 "	padding: 4px;\n"
 "    border-radius:  6px;\n"
@@ -138,7 +147,7 @@ public:
 "}\n"
 ""));
 
-        horizontalLayout_6->addWidget(pushButton);
+        horizontalLayout_6->addWidget(addProcessPushButton);
 
 
         horizontalLayout_4->addLayout(horizontalLayout_6);
@@ -151,37 +160,32 @@ public:
         horizontalLayout_5->setContentsMargins(-1, -1, -1, 5);
         horizontalLayout_8 = new QHBoxLayout();
         horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
-        label_5 = new QLabel(verticalLayoutWidget);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
+        segNameLabel = new QLabel(verticalLayoutWidget);
+        segNameLabel->setObjectName(QString::fromUtf8("segNameLabel"));
+        segNameLabel->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
 
-        horizontalLayout_8->addWidget(label_5);
+        horizontalLayout_8->addWidget(segNameLabel);
 
-        horizontalLayout_9 = new QHBoxLayout();
-        horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
-        lineEdit_2 = new QLineEdit(verticalLayoutWidget);
-        lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
+        segNameLineEdit = new QLineEdit(verticalLayoutWidget);
+        segNameLineEdit->setObjectName(QString::fromUtf8("segNameLineEdit"));
 
-        horizontalLayout_9->addWidget(lineEdit_2);
+        horizontalLayout_8->addWidget(segNameLineEdit);
 
+        segSizeLabel = new QLabel(verticalLayoutWidget);
+        segSizeLabel->setObjectName(QString::fromUtf8("segSizeLabel"));
+        segSizeLabel->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
 
-        horizontalLayout_8->addLayout(horizontalLayout_9);
+        horizontalLayout_8->addWidget(segSizeLabel);
 
-        label_6 = new QLabel(verticalLayoutWidget);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
+        segSizeSpinBox = new QSpinBox(verticalLayoutWidget);
+        segSizeSpinBox->setObjectName(QString::fromUtf8("segSizeSpinBox"));
 
-        horizontalLayout_8->addWidget(label_6);
+        horizontalLayout_8->addWidget(segSizeSpinBox);
 
-        spinBox_3 = new QSpinBox(verticalLayoutWidget);
-        spinBox_3->setObjectName(QString::fromUtf8("spinBox_3"));
-
-        horizontalLayout_8->addWidget(spinBox_3);
-
-        pushButton_2 = new QPushButton(verticalLayoutWidget);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setEnabled(false);
-        pushButton_2->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+        addSegmentPushButton = new QPushButton(verticalLayoutWidget);
+        addSegmentPushButton->setObjectName(QString::fromUtf8("addSegmentPushButton"));
+        addSegmentPushButton->setEnabled(true);
+        addSegmentPushButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    border: 2px solid #8f8f91;\n"
 "	padding: 4px;\n"
 "    border-radius:  6px;\n"
@@ -206,7 +210,7 @@ public:
 "}\n"
 ""));
 
-        horizontalLayout_8->addWidget(pushButton_2);
+        horizontalLayout_8->addWidget(addSegmentPushButton);
 
 
         horizontalLayout_5->addLayout(horizontalLayout_8);
@@ -214,23 +218,73 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_5);
 
-        treeWidget_2 = new QTreeWidget(verticalLayoutWidget);
-        treeWidget_2->setObjectName(QString::fromUtf8("treeWidget_2"));
+        processSegmentTreeWidget = new QTreeWidget(verticalLayoutWidget);
+        processSegmentTreeWidget->setObjectName(QString::fromUtf8("processSegmentTreeWidget"));
 
-        verticalLayout->addWidget(treeWidget_2);
+        verticalLayout->addWidget(processSegmentTreeWidget);
 
-        pushButton_3 = new QPushButton(processesinputform);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-        pushButton_3->setEnabled(false);
-        pushButton_3->setGeometry(QRect(250, 530, 111, 28));
+        verticalLayoutWidget_2 = new QWidget(processesinputform);
+        verticalLayoutWidget_2->setObjectName(QString::fromUtf8("verticalLayoutWidget_2"));
+        verticalLayoutWidget_2->setGeometry(QRect(800, 220, 131, 182));
+        verticalLayout_2 = new QVBoxLayout(verticalLayoutWidget_2);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        firstFitCheckBox = new QCheckBox(verticalLayoutWidget_2);
+        firstFitCheckBox->setObjectName(QString::fromUtf8("firstFitCheckBox"));
+
+        verticalLayout_2->addWidget(firstFitCheckBox);
+
+        bestFitCheckBox = new QCheckBox(verticalLayoutWidget_2);
+        bestFitCheckBox->setObjectName(QString::fromUtf8("bestFitCheckBox"));
+
+        verticalLayout_2->addWidget(bestFitCheckBox);
+
+        worstFitCheckBox = new QCheckBox(verticalLayoutWidget_2);
+        worstFitCheckBox->setObjectName(QString::fromUtf8("worstFitCheckBox"));
+
+        verticalLayout_2->addWidget(worstFitCheckBox);
+
+        allocatePushButton = new QPushButton(verticalLayoutWidget_2);
+        allocatePushButton->setObjectName(QString::fromUtf8("allocatePushButton"));
+        allocatePushButton->setEnabled(true);
         QFont font;
         font.setFamily(QString::fromUtf8("Arial"));
         font.setBold(false);
         font.setItalic(false);
         font.setWeight(50);
         font.setStrikeOut(false);
-        pushButton_3->setFont(font);
-        pushButton_3->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
+        allocatePushButton->setFont(font);
+        allocatePushButton->setStyleSheet(QString::fromUtf8("margin-bottom: 10px;\n"
+"margin-top: 3px;\n"
+"font: large \"Arial\";"));
+
+        verticalLayout_2->addWidget(allocatePushButton);
+
+        deallocatePushButton = new QPushButton(verticalLayoutWidget_2);
+        deallocatePushButton->setObjectName(QString::fromUtf8("deallocatePushButton"));
+        deallocatePushButton->setEnabled(true);
+        deallocatePushButton->setFont(font);
+        deallocatePushButton->setStyleSheet(QString::fromUtf8("margin-bottom: 10px;\n"
+"font: large \"Arial\""));
+
+        verticalLayout_2->addWidget(deallocatePushButton);
+
+        drawPushButton = new QPushButton(verticalLayoutWidget_2);
+        drawPushButton->setObjectName(QString::fromUtf8("drawPushButton"));
+        drawPushButton->setEnabled(false);
+        drawPushButton->setFont(font);
+        drawPushButton->setStyleSheet(QString::fromUtf8("font: large \"Arial\""));
+
+        verticalLayout_2->addWidget(drawPushButton);
+
+        oldProcessTreeWidget = new QTreeWidget(processesinputform);
+        oldProcessTreeWidget->setObjectName(QString::fromUtf8("oldProcessTreeWidget"));
+        oldProcessTreeWidget->setGeometry(QRect(20, 560, 631, 261));
+        oldProcessLabel = new QLabel(processesinputform);
+        oldProcessLabel->setObjectName(QString::fromUtf8("oldProcessLabel"));
+        oldProcessLabel->setGeometry(QRect(30, 530, 151, 26));
+        oldProcessLabel->setStyleSheet(QString::fromUtf8("font: large \"Arial\";\n"
+"font-size: 14px;"));
 
         retranslateUi(processesinputform);
 
@@ -240,18 +294,32 @@ public:
     void retranslateUi(QWidget *processesinputform)
     {
         processesinputform->setWindowTitle(QApplication::translate("processesinputform", "Form", nullptr));
-        label_3->setText(QApplication::translate("processesinputform", "Process Name", nullptr));
-        label_4->setText(QApplication::translate("processesinputform", "Number of Segments", nullptr));
-        pushButton->setText(QApplication::translate("processesinputform", "Add Process", nullptr));
-        label_5->setText(QApplication::translate("processesinputform", "Segment Name", nullptr));
-        label_6->setText(QApplication::translate("processesinputform", "Segment Size", nullptr));
-        pushButton_2->setText(QApplication::translate("processesinputform", "Add Segment", nullptr));
-        QTreeWidgetItem *___qtreewidgetitem = treeWidget_2->headerItem();
-        ___qtreewidgetitem->setText(3, QApplication::translate("processesinputform", "Segment Size", nullptr));
-        ___qtreewidgetitem->setText(2, QApplication::translate("processesinputform", "Segment Name", nullptr));
-        ___qtreewidgetitem->setText(1, QApplication::translate("processesinputform", "Segment ID", nullptr));
+        processNameLabel->setText(QApplication::translate("processesinputform", "Process Name", nullptr));
+        noOfSegLabel->setText(QApplication::translate("processesinputform", "Number of Segments", nullptr));
+        addProcessPushButton->setText(QApplication::translate("processesinputform", "Add Process", nullptr));
+        segNameLabel->setText(QApplication::translate("processesinputform", "Segment Name", nullptr));
+        segSizeLabel->setText(QApplication::translate("processesinputform", "Segment Size", nullptr));
+        addSegmentPushButton->setText(QApplication::translate("processesinputform", "Add Segment", nullptr));
+        QTreeWidgetItem *___qtreewidgetitem = processSegmentTreeWidget->headerItem();
+        ___qtreewidgetitem->setText(5, QApplication::translate("processesinputform", "Segment Size", nullptr));
+        ___qtreewidgetitem->setText(4, QApplication::translate("processesinputform", "Segment Name", nullptr));
+        ___qtreewidgetitem->setText(3, QApplication::translate("processesinputform", "Segment ID", nullptr));
+        ___qtreewidgetitem->setText(2, QApplication::translate("processesinputform", "Allocated", nullptr));
+        ___qtreewidgetitem->setText(1, QApplication::translate("processesinputform", "Process Name", nullptr));
         ___qtreewidgetitem->setText(0, QApplication::translate("processesinputform", "Process ID", nullptr));
-        pushButton_3->setText(QApplication::translate("processesinputform", "GO", nullptr));
+        firstFitCheckBox->setText(QApplication::translate("processesinputform", "First Fit", nullptr));
+        bestFitCheckBox->setText(QApplication::translate("processesinputform", "Best Fit", nullptr));
+        worstFitCheckBox->setText(QApplication::translate("processesinputform", "Worst Fit", nullptr));
+        allocatePushButton->setText(QApplication::translate("processesinputform", "Allocate", nullptr));
+        deallocatePushButton->setText(QApplication::translate("processesinputform", "Deallocate", nullptr));
+        drawPushButton->setText(QApplication::translate("processesinputform", "Draw", nullptr));
+        QTreeWidgetItem *___qtreewidgetitem1 = oldProcessTreeWidget->headerItem();
+        ___qtreewidgetitem1->setText(4, QApplication::translate("processesinputform", "Segment Size", nullptr));
+        ___qtreewidgetitem1->setText(3, QApplication::translate("processesinputform", "Start Address", nullptr));
+        ___qtreewidgetitem1->setText(2, QApplication::translate("processesinputform", "Allocated", nullptr));
+        ___qtreewidgetitem1->setText(1, QApplication::translate("processesinputform", "Segment Name", nullptr));
+        ___qtreewidgetitem1->setText(0, QApplication::translate("processesinputform", "Segment ID", nullptr));
+        oldProcessLabel->setText(QApplication::translate("processesinputform", "Old Process Segments", nullptr));
     } // retranslateUi
 
 };

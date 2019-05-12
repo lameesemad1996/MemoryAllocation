@@ -39,11 +39,42 @@ Outputt::~Outputt()
     delete ui;
 }
 
-list<Process> Outputt::getInputs()
+QColor Outputt::chooseColor (long parentID)
 {
+    int choose = parentID % 13;
 
+    switch (choose)
+    {
+    case 0:
+        return Qt::yellow;
+    case 1:
+        return Qt::darkBlue;
+    case 2:
+        return Qt::darkCyan;
+    case 3:
+        return Qt::blue;
+    case 4:
+        return Qt::green;
+    case 5:
+        return Qt::magenta;
+    case 6:
+        return Qt::cyan;
+    case 7:
+        return Qt::darkYellow;
+    case 8:
+        return Qt::black;
+    case 9:
+        return Qt::darkGray;
+    case 10:
+        return Qt::darkGreen;
+    case 11:
+        return Qt::red;
+    case 12:
+        return Qt::darkMagenta;
+    default:
+        return Qt::white;
+    }
 }
-
 
 list<Segment> Outputt::getOP(Memory myMem)
 {
@@ -73,12 +104,20 @@ void Outputt::showOP(Memory myMem, long tickInterval)
         {
             sets[i] = new QtCharts::QBarSet(QString::fromStdString("Hole"));
             *sets[i] << it->getLimit();
-            sets[i]->setColor(Qt::white);
+            sets[i]->setColor(Qt::lightGray);
             series->append(sets[i]);
         }
         else
         {
             sets[i] = new QtCharts::QBarSet(QString::fromStdString(it->getName()));
+            if(it->getName() == "Old Process")
+                sets[i]->setColor(Qt::darkRed);
+            else
+            {
+                cout << it->getParentProcessId() << endl;
+                QColor color = Outputt::chooseColor(it->getParentProcessId());
+                sets[i]->setColor(color);
+            }
             *sets[i] << it->getLimit();
             series->append(sets[i]);
         }

@@ -68,6 +68,14 @@ void Segment::setName(string name)
 {
 	this->name = name;
 }
+void Segment::setParentProcessId(long id)
+{
+    this->parentProcessId = id;
+}
+void Segment::setAllocated(bool allocated)
+{
+    this->allocated = allocated;
+}
 
 //get methods
 long Segment::getID()
@@ -93,6 +101,10 @@ long Segment::getSize()
 string Segment::getName()
 {
 	return name;
+}
+long Segment::getParentProcessId()
+{
+    return parentProcessId;
 }
 Segment::segmentState Segment::getState()
 {
@@ -190,6 +202,44 @@ list<Segment> Segment::collect(list<Segment> &memorySegmentsList)
 	}
 	return returnable;
 }
+list<Segment> Segment::collectFree(list<Segment> &memorySegmentsList)
+{
+    /*
+    sortSegListByBaseAdd_ascending(memorySegmentsList);
+    list<Segment>::iterator it;
+    list<Segment>::iterator it2;
+    list<Segment> returnable;
+    for (it = memorySegmentsList.begin(); it != memorySegmentsList.end(); ++it)
+    {
+        if(it->getState() != Segment::segmentState::free)
+            continue;
+        it2 = ++it;
+        it--;
+        if(it2== memorySegmentsList.end())
+        {
+            continue;
+        }
+        else
+        {
+            if (((it->base) + (it->limit)) == (it2->base))
+            {
+                long toBeAdded = it->limit + it2->limit;
+                it->limit = toBeAdded;
+                memorySegmentsList.erase(it2);
+                returnable.push_back(*it);
+            }
+            else
+            {
+                returnable.push_back(*it);
+            }
+        }
+    }
+
+    return returnable;
+    */
+    return memorySegmentsList;
+}
+
 void Segment::printSegList(list<Segment> segmentList)
 {
 	list<Segment>::iterator it;

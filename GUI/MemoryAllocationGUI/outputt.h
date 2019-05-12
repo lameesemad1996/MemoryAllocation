@@ -30,9 +30,9 @@ public:
     explicit Outputt(QWidget *parent = nullptr);
     ~Outputt();
     void static showOP(Memory myMem, long tickInterval);
-    list<Process> static getInputs();
     list<Segment> static getOP(Memory myMem);
     static QMainWindow window;
+    QColor static chooseColor (long parentID);
 
 private:
     Ui::Outputt *ui;

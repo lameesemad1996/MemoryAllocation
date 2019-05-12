@@ -35,6 +35,10 @@ void Process::setName(string name)
 {
 	this->name = name;
 }
+void Process::setNoOfSeg(long noOfSeg)
+{
+    this->noOfSeg = noOfSeg;
+}
 
 //get methods
 long Process::getID()
@@ -49,9 +53,14 @@ Process::processState Process::getState()
 {
 	return state;
 }
+long Process::getNoOfSeg()
+{
+    return noOfSeg;
+}
 
 //other functions
 void Process::addSegment(Segment segment)
 {
+    //segment.setParentProcessId(this->getID());
 	segmentList.push_back(segment);
 }

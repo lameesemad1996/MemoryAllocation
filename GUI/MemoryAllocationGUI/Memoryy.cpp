@@ -157,6 +157,7 @@ bool Memory::first_fit_allocate(Process &process)
 		bool returnable = false;
 
 		list<Segment> freeSegments = Segment::filterFree(memorySegmentsList);
+        //Segment::collectFree(memorySegmentsList);
 
 		//corner cases
 		if (process.segmentList.empty())
@@ -177,7 +178,8 @@ bool Memory::first_fit_allocate(Process &process)
 
 
 		for (it0 = process.segmentList.begin(); it0 != process.segmentList.end(); ++it0)
-		{
+        {
+
 			if (it0->allocated == true)
 				continue;
 
@@ -193,6 +195,8 @@ bool Memory::first_fit_allocate(Process &process)
 					it1->setState(Segment::occupied);
 					//new segment name is name of process segment
 					string newSegName = it0->getName();
+                    //saving the id of the parent process for gui purposes
+                    long parentID = process.getID();
 					//get size of free slot before occupation
 					long sizeSegBeforeAlloc = it1->getLimit();
 					//set size of occupied slot to be equal to the size of the segment being inserted
@@ -229,6 +233,7 @@ bool Memory::first_fit_allocate(Process &process)
 							it2->setName(newSegName);
 							it2->setState(Segment::occupied);
 							it2->setLimit(newSizeOfCurrentSegment);
+                            it2->setParentProcessId(parentID);
 							//insert the free slot right after the occupied slot
 							it2++;
 							if (it2 == memorySegmentsList.end())
@@ -252,6 +257,7 @@ bool Memory::first_fit_allocate(Process &process)
 						}
 					}
 					freeSegments = Segment::filterFree(memorySegmentsList);
+                    //Segment::collectFree(memorySegmentsList);
 					Segment::collect(freeSegments);
 					break;
 				}
@@ -436,6 +442,8 @@ bool Memory::best_fit_allocate(Process &process)
 					it1->setState(Segment::occupied);
 					//new segment name is name of process segment
 					string newSegName = it0->getName();
+                    //saving the id of the parent process for gui purposes
+                    long parentID = process.getID();
 					//get size of free slot before occupation
 					long sizeSegBeforeAlloc = it1->getLimit();
 					//set size of occupied slot to be equal to the size of the segment being inserted
@@ -474,6 +482,7 @@ bool Memory::best_fit_allocate(Process &process)
 							it2->setName(newSegName);
 							it2->setState(Segment::occupied);
 							it2->setLimit(newSizeOfCurrentSegment);
+                            it2->setParentProcessId(parentID);
 							//insert the free slot right after the occupied slot
 							it2++;
 							if (it2 == memorySegmentsList.end())
@@ -683,6 +692,8 @@ bool Memory::worst_fit_allocate(Process &process)
 					it1->setState(Segment::occupied);
 					//new segment name is name of process segment
 					string newSegName = it0->getName();
+                    //saving the id of the parent process for gui purposes
+                    long parentID = process.getID();
 					//get size of free slot before occupation
 					long sizeSegBeforeAlloc = it1->getLimit();
 					//set size of occupied slot to be equal to the size of the segment being inserted
@@ -721,6 +732,7 @@ bool Memory::worst_fit_allocate(Process &process)
 							it2->setName(newSegName);
 							it2->setState(Segment::occupied);
 							it2->setLimit(newSizeOfCurrentSegment);
+                            it2->setParentProcessId(parentID);
 							//insert the free slot right after the occupied slot
 							it2++;
 							if (it2 == memorySegmentsList.end())
@@ -793,5 +805,41 @@ void Memory::addSegment(Segment segment)
 {
 	memorySegmentsList.push_back(segment);
 }
+void Memory::deallocate(Process &process)
+{
+    list<Segment>::iterator it;
+    list<Segment>::iterator it2;
 
+    for (it = this->memorySegmentsList.begin(); it != this->memorySegmentsList.end(); ++it)
+    {
+        if(it->parentProcessId == process.getID())
+        {
+            it->parentProcessId = -1;
+            it->setName("Free");
+            it->setState(Segment::segmentState::free);
+        }
+    }
+    for (it2 = process.segmentList.begin(); it2 != process.segmentList.end(); ++it2)
+    {
+        it2->allocated = false;
+    }
+    //Segment::collectFree(this->memorySegmentsList);
+}
+void Memory::deallocate(Segment &seg)
+{
 
+    list<Segment>::iterator it;
+
+    for (it = this->OldProcessSegmentsList.begin(); it != this->OldProcessSegmentsList.end(); ++it)
+    {
+        if((it->getID() == seg.getID())  && (it->allocated == true))
+        {
+            it->allocated = false;
+            it->setName("Free");
+            it->setState(Segment::segmentState::free);
+        }
+    }
+    //Segment::collectFree(this->memorySegmentsList);
+
+    return;
+}
