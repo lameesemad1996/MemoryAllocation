@@ -830,9 +830,9 @@ void Memory::deallocate(Segment &seg)
 
     list<Segment>::iterator it;
 
-    for (it = this->OldProcessSegmentsList.begin(); it != this->OldProcessSegmentsList.end(); ++it)
+    for (it = this->memorySegmentsList.begin(); it != this->memorySegmentsList.end(); ++it)
     {
-        if((it->getID() == seg.getID())  && (it->allocated == true))
+        if((it->getState() == Segment::segmentState::oldProcess) && (it->getBase() == seg.getBase())  && (it->allocated == true))
         {
             it->allocated = false;
             it->setName("Free");

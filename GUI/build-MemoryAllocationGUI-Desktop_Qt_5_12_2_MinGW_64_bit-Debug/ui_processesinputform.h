@@ -55,6 +55,7 @@ public:
     QPushButton *drawPushButton;
     QTreeWidget *oldProcessTreeWidget;
     QLabel *oldProcessLabel;
+    QPushButton *deallocatePushButton_2;
 
     void setupUi(QWidget *processesinputform)
     {
@@ -285,6 +286,13 @@ public:
         oldProcessLabel->setGeometry(QRect(30, 530, 151, 26));
         oldProcessLabel->setStyleSheet(QString::fromUtf8("font: large \"Arial\";\n"
 "font-size: 14px;"));
+        deallocatePushButton_2 = new QPushButton(processesinputform);
+        deallocatePushButton_2->setObjectName(QString::fromUtf8("deallocatePushButton_2"));
+        deallocatePushButton_2->setEnabled(true);
+        deallocatePushButton_2->setGeometry(QRect(660, 680, 101, 51));
+        deallocatePushButton_2->setFont(font);
+        deallocatePushButton_2->setStyleSheet(QString::fromUtf8("margin-bottom: 10px;\n"
+"font: large \"Arial\""));
 
         retranslateUi(processesinputform);
 
@@ -320,6 +328,7 @@ public:
         ___qtreewidgetitem1->setText(1, QApplication::translate("processesinputform", "Segment Name", nullptr));
         ___qtreewidgetitem1->setText(0, QApplication::translate("processesinputform", "Segment ID", nullptr));
         oldProcessLabel->setText(QApplication::translate("processesinputform", "Old Process Segments", nullptr));
+        deallocatePushButton_2->setText(QApplication::translate("processesinputform", "Deallocate", nullptr));
     } // retranslateUi
 
 };

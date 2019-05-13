@@ -46,6 +46,8 @@ private slots:
 
     void on_worstFitCheckBox_stateChanged();
 
+    void on_deallocatePushButton_2_clicked();
+
 private:
     Ui::processesinputform *ui;
 };

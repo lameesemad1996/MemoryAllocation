@@ -385,6 +385,35 @@ font-size: 14px;</string>
     <string>Old Process Segments</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="deallocatePushButton_2">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>680</y>
+     <width>101</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+     <strikeout>false</strikeout>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">margin-bottom: 10px;
+font: large &quot;Arial&quot;</string>
+   </property>
+   <property name="text">
+    <string>Deallocate</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

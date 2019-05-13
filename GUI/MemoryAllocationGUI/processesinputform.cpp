@@ -219,30 +219,17 @@ void processesinputform::on_allocatePushButton_clicked()
 void processesinputform::on_deallocatePushButton_clicked()
 {
     QTreeWidgetItem* selectedItemPtr = ui->processSegmentTreeWidget->currentItem();
-    QTreeWidgetItem* selectedOldItemPtr = ui->oldProcessTreeWidget->currentItem();
+
     QString allocated = "False";
 
     if(selectedItemPtr == nullptr)
     {
-        QMessageBox::information(this,tr("Cannot Allocate"),tr("Please select a process to deallocate"));
+        QMessageBox::information(this,tr("Cannot Deallocate"),tr("Please select a process to deallocate"));
     }
     else if (selectedItemPtr->data(2,0).toString() == allocated)
     {
         QMessageBox::information(this,tr("Cannot Deallocate"),tr("This process is already deallocated"));
     }
-    /*else if (selectedOldItemPtr != nullptr)
-    {
-        long itemBaseAdd =std::stol((selectedItemPtr->data(3,0)).toString().toUtf8().constData());
-        for(oldIt = MainWindow::instance()->myMem.OldProcessSegmentsList.begin() ; oldIt != MainWindow::instance()->myMem.OldProcessSegmentsList.end(); ++oldIt)
-        {
-            if(itemBaseAdd == oldIt->getBase())
-            {
-                MainWindow::instance()->myMem.deallocate(*oldIt);
-            }
-            Outputt::showOP(MainWindow::instance()->myMem, (MainWindow::instance()->myMem.getSize())/20);
-            selectedOldItemPtr->setText(2, "False");
-        }
-    }*/
     else if (selectedItemPtr != nullptr)
     {
         long processId = std::stol((selectedItemPtr->data(0,0)).toString().toUtf8().constData());
@@ -314,4 +301,37 @@ void processesinputform::on_worstFitCheckBox_stateChanged()
         ui->worstFitCheckBox->setEnabled(true);
         ui->firstFitCheckBox->setEnabled(true);
     }
+}
+
+void processesinputform::on_deallocatePushButton_2_clicked()
+{
+    QTreeWidgetItem* selectedOldItemPtr = ui->oldProcessTreeWidget->currentItem();
+
+    QString allocated = "False";
+
+    if(selectedOldItemPtr == nullptr)
+    {
+        QMessageBox::information(this,tr("Cannot Deallocate"),tr("Please select a process to deallocate"));
+    }
+    else if (selectedOldItemPtr != nullptr)
+    {
+        long itemBaseAdd =std::stol((selectedOldItemPtr->data(3,0)).toString().toUtf8().constData());
+        for(oldIt = MainWindow::instance()->myMem.OldProcessSegmentsList.begin() ; oldIt != MainWindow::instance()->myMem.OldProcessSegmentsList.end(); ++oldIt)
+        {
+            if(itemBaseAdd == oldIt->getBase())
+            {
+                MainWindow::instance()->myMem.deallocate(*oldIt);
+            }
+        }
+        Outputt::showOP(MainWindow::instance()->myMem, (MainWindow::instance()->myMem.getSize())/20);
+        selectedOldItemPtr->setText(2, "False");
+    }
+    else
+    {
+        if(selectedOldItemPtr == nullptr)
+        {
+            QMessageBox::information(this,tr("Cannot Deallocate"),tr("Please select a process to deallocate"));
+        }
+    }
+
 }
