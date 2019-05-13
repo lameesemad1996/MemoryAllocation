@@ -205,42 +205,48 @@ list<Segment> Segment::collect(list<Segment> &memorySegmentsList)
 	}
 	return returnable;
 }
-list<Segment> Segment::collectFree(list<Segment> &memorySegmentsList)
+void Segment::collectFree(list<Segment> &memorySegmentsList)
 {
-    /*
     sortSegListByBaseAdd_ascending(memorySegmentsList);
     list<Segment>::iterator it;
     list<Segment>::iterator it2;
-    list<Segment> returnable;
+
     for (it = memorySegmentsList.begin(); it != memorySegmentsList.end(); ++it)
     {
         if(it->getState() != Segment::segmentState::free)
             continue;
-        it2 = ++it;
-        it--;
-        if(it2== memorySegmentsList.end())
+        else if (it->getState() == Segment::segmentState::free)
         {
-            continue;
-        }
-        else
-        {
-            if (((it->base) + (it->limit)) == (it2->base))
+            it2 = ++it;
+            it--;
+
+            if(it == memorySegmentsList.end())
             {
-                long toBeAdded = it->limit + it2->limit;
-                it->limit = toBeAdded;
-                memorySegmentsList.erase(it2);
-                returnable.push_back(*it);
+                continue;
             }
             else
             {
-                returnable.push_back(*it);
+                if(it2->getState() == Segment::segmentState::free)
+                {
+                    if (((it->base) + (it->limit)) == (it2->base))
+                    {
+                        long toBeAdded = it->limit + it2->limit;
+                        it->setLimit(toBeAdded);
+                        if(it2 == memorySegmentsList.end())
+                        {
+                            memorySegmentsList.pop_back();
+                        }
+                        else
+                        {
+                            memorySegmentsList.erase(it2);
+                        }
+                    }
+                    else continue;
+                }
+
             }
         }
     }
-
-    return returnable;
-    */
-    return memorySegmentsList;
 }
 
 void Segment::printSegList(list<Segment> segmentList)

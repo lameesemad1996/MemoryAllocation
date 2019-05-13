@@ -6,6 +6,7 @@
 #include <QTreeWidgetItem>
 #include <QTreeWidgetItemIterator>
 #include "outputt.h"
+#include <QMessageBox>
 #include "Segmentt.h"
 
 MainWindow* MainWindow::s_instance = nullptr;
@@ -20,9 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
     assert(!s_instance); //another instance already exists!
     s_instance = this;
     //MainWindow::mainWindowPtr = this;
-    ui->holeStartSpinBox_2->setRange(0,10000000);
-    ui->holeSizeSpinBox_2->setRange(0,10000000);
-    ui->memorySizeSpinBox->setRange(0,10000000);
+    ui->holeStartSpinBox_2->setRange(0,2000000000);
+    ui->holeSizeSpinBox_2->setRange(0,2000000000);
+    ui->memorySizeSpinBox->setRange(0,2000000000);
     totalHoleSize = 0;
 }
 
@@ -36,6 +37,9 @@ Memory MainWindow::fillOldProcess(list<Segment> holesSegList, long memSize, bool
         Memory returnable;
         returnable.setSize(memSize);
         long ID = 0;
+        int lastAllocAdd = 0;
+        list<Segment>::iterator it;
+        it = holesSegList.begin();
 
         //corner case: if no holes entered
         if (holesSegList.empty())
@@ -46,9 +50,13 @@ Memory MainWindow::fillOldProcess(list<Segment> holesSegList, long memSize, bool
             returnable.memorySegmentsList.push_back(newOldProSeg);
             return returnable;
         }
-
-        int lastAllocAdd = 0;
-        list<Segment>::iterator it;
+        else if(holesSegList.size() == 1)
+        {
+            if(it->getLimit() > memSize)
+            {
+                invalidTotalMemSizeFlag = true;
+            }
+        }
 
         Segment::sortSegListByBaseAdd_ascending(holesSegList);
         Segment::collect(holesSegList);
@@ -155,27 +163,58 @@ void MainWindow::on_addHolePushButton_clicked()
     long holeSize = ui->holeSizeSpinBox_2->value();
     totalHoleSize += holeSize;
     Segment newhole("Free", holeStartAddress, holeSize, Segment::free);
-    holesList.push_back(newhole);
-    QTreeWidgetItem *newHoleItem = new QTreeWidgetItem(ui->HoleTreeWidget);
-    newHoleItem->setText(0,QString::fromStdString(to_string(newhole.getID())));
-    newHoleItem->setText(1,QString::fromStdString(to_string(newhole.getBase())));
-    newHoleItem->setText(2,QString::fromStdString(to_string(newhole.getLimit())));
-    ui->HoleTreeWidget->addTopLevelItem(newHoleItem);
-    ui->holeSizeSpinBox_2->setValue(0);
-    ui->holeStartSpinBox_2->setValue(0);
+    if(holesList.empty())
+    {
+        holesList.push_back(newhole);
+        QTreeWidgetItem *newHoleItem = new QTreeWidgetItem(ui->HoleTreeWidget);
+        newHoleItem->setText(0,QString::fromStdString(to_string(newhole.getID())));
+        newHoleItem->setText(1,QString::fromStdString(to_string(newhole.getBase())));
+        newHoleItem->setText(2,QString::fromStdString(to_string(newhole.getLimit())));
+        ui->HoleTreeWidget->addTopLevelItem(newHoleItem);
+        ui->holeSizeSpinBox_2->setValue(0);
+        ui->holeStartSpinBox_2->setValue(0);
+    }
+    else
+    {
+        list<Segment> holeListCopy;
+        holeListCopy.assign(holesList.begin(),holesList.end());
+        Segment::sortSegListByBaseAdd_ascending(holeListCopy);
+        Segment prevHole = holeListCopy.back();
+        if (newhole.getBase() < (prevHole.getBase()+prevHole.getLimit()))
+        {
+            QMessageBox::information(this,tr("Invalid Entry"),tr("This hole is invalid"));
+        }
+        else
+        {
+            holesList.push_back(newhole);
+            QTreeWidgetItem *newHoleItem = new QTreeWidgetItem(ui->HoleTreeWidget);
+            newHoleItem->setText(0,QString::fromStdString(to_string(newhole.getID())));
+            newHoleItem->setText(1,QString::fromStdString(to_string(newhole.getBase())));
+            newHoleItem->setText(2,QString::fromStdString(to_string(newhole.getLimit())));
+            ui->HoleTreeWidget->addTopLevelItem(newHoleItem);
+            ui->holeSizeSpinBox_2->setValue(0);
+            ui->holeStartSpinBox_2->setValue(0);
+        }
+    }
 }
 
 void MainWindow::on_enterProcessesPushButton_clicked()
 {
     long memSize = ui->memorySizeSpinBox->value();
     this->myMem = fillOldProcess(holesList, memSize, this->invalidTotalMemSizeFlag);
-    //this->oldProcessList = Segment::filterOldProcess(myMem.memorySegmentsList);
-    //Outputt::showOP(myMem, memSize/20);
-    processesinputform* processInputForm = new processesinputform();
-    processInputForm->setFixedSize(950,850);
-    QMainWindow* processWindowPtr = new QMainWindow();
-    processWindowPtr->setWindowModality(Qt::WindowModal);
-    processWindowPtr->setCentralWidget(processInputForm);
-    processWindowPtr->adjustSize();
-    processWindowPtr->show();
+    if (this->invalidTotalMemSizeFlag)
+    {
+        QMessageBox::information(this,tr("Invalid Entries"),tr("The memory is too small"));
+        invalidTotalMemSizeFlag = false;
+    }
+    else
+    {
+        processesinputform* processInputForm = new processesinputform();
+        processInputForm->setFixedSize(950,850);
+        QMainWindow* processWindowPtr = new QMainWindow();
+        processWindowPtr->setWindowModality(Qt::WindowModal);
+        processWindowPtr->setCentralWidget(processInputForm);
+        processWindowPtr->adjustSize();
+        processWindowPtr->show();
+    }
 }

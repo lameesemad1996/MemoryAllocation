@@ -19,6 +19,9 @@ processesinputform::processesinputform(QWidget *parent) :
     ui->setupUi(this);
     indexNow = -1;
     iteration++;
+    ui->segSizeSpinBox->setRange(0,2000000000);
+    ui->noOfSegSpinBox->setRange(0,2000000000);
+
     for(oldIt = MainWindow::instance()->myMem.OldProcessSegmentsList.begin() ; oldIt != MainWindow::instance()->myMem.OldProcessSegmentsList.end(); ++oldIt)
     {
         QTreeWidgetItem* newOldProcessItem = new QTreeWidgetItem(ui->oldProcessTreeWidget);
@@ -101,7 +104,8 @@ void processesinputform::on_addProcessPushButton_clicked()
             }
         }
     }
-
+    ui->processNameLineEdit->setText("");
+    ui->noOfSegSpinBox->setValue(0);
 }
 
 void processesinputform::on_addSegmentPushButton_clicked()
@@ -128,11 +132,13 @@ void processesinputform::on_addSegmentPushButton_clicked()
         newSegmentItem->setText(5,QString::fromStdString(to_string(newsegment.getSize())));
         (*itemIt)->setExpanded(true);
     }
+    ui->segNameLineEdit->setText("");
+    ui->segSizeSpinBox->setValue(0);
 }
 
 void processesinputform::on_allocatePushButton_clicked()
 {
-    //Segment::collectFree(MainWindow::instance()->myMem.memorySegmentsList);
+    Segment::collectFree(MainWindow::instance()->myMem.memorySegmentsList);
     if(allocationTypeEnum == allocationType::firstFit)
     {
         QTreeWidgetItem* selectedItemPtr = ui->processSegmentTreeWidget->currentItem();
@@ -155,9 +161,17 @@ void processesinputform::on_allocatePushButton_clicked()
             list<Process>::iterator proIt = listOfInputProcesses.begin();
             std::advance(proIt, processId);
             Process inputToFn = *proIt;
-            MainWindow::instance()->myMem.first_fit_allocate(inputToFn);
-            Outputt::showOP(MainWindow::instance()->myMem, (MainWindow::instance()->myMem.getSize())/20);
-            selectedItemPtr->setText(2, "True");
+            bool isAllocatedFlag = MainWindow::instance()->myMem.first_fit_allocate(inputToFn);
+            if(isAllocatedFlag)
+            {
+                Segment::collectFree(MainWindow::instance()->myMem.memorySegmentsList);
+                Outputt::showOP(MainWindow::instance()->myMem, (MainWindow::instance()->myMem.getSize())/20);
+                selectedItemPtr->setText(2, "True");
+            }
+            else
+            {
+                QMessageBox::information(this,tr("Cannot Allocate"),tr("There is no enough memory"));
+            }
         }
     }
     else if(allocationTypeEnum == allocationType::bestFit)
@@ -182,9 +196,17 @@ void processesinputform::on_allocatePushButton_clicked()
             list<Process>::iterator proIt = listOfInputProcesses.begin();
             std::advance(proIt, processId);
             Process inputToFn = *proIt;
-            MainWindow::instance()->myMem.best_fit_allocate(inputToFn);
-            Outputt::showOP(MainWindow::instance()->myMem, (MainWindow::instance()->myMem.getSize())/20);
-            selectedItemPtr->setText(2, "True");
+            bool isAllocatedFlag = MainWindow::instance()->myMem.best_fit_allocate(inputToFn);
+            if(isAllocatedFlag)
+            {
+                Segment::collectFree(MainWindow::instance()->myMem.memorySegmentsList);
+                Outputt::showOP(MainWindow::instance()->myMem, (MainWindow::instance()->myMem.getSize())/20);
+                selectedItemPtr->setText(2, "True");
+            }
+            else
+            {
+                QMessageBox::information(this,tr("Cannot Allocate"),tr("There is no enough memory"));
+            }
         }
     }
     else if(allocationTypeEnum == allocationType::worstFit)
@@ -209,15 +231,24 @@ void processesinputform::on_allocatePushButton_clicked()
             list<Process>::iterator proIt = listOfInputProcesses.begin();
             std::advance(proIt, processId);
             Process inputToFn = *proIt;
-            MainWindow::instance()->myMem.worst_fit_allocate(inputToFn);
-            Outputt::showOP(MainWindow::instance()->myMem, (MainWindow::instance()->myMem.getSize())/20);
-            selectedItemPtr->setText(2, "True");
+            bool isAllocatedFlag = MainWindow::instance()->myMem.worst_fit_allocate(inputToFn);
+            if(isAllocatedFlag)
+            {
+                Segment::collectFree(MainWindow::instance()->myMem.memorySegmentsList);
+                Outputt::showOP(MainWindow::instance()->myMem, (MainWindow::instance()->myMem.getSize())/20);
+                selectedItemPtr->setText(2, "True");
+            }
+            else
+            {
+                QMessageBox::information(this,tr("Cannot Allocate"),tr("This process is already allocated"));
+            }
         }
     }
 }
 
 void processesinputform::on_deallocatePushButton_clicked()
 {
+    Segment::collectFree(MainWindow::instance()->myMem.memorySegmentsList);
     QTreeWidgetItem* selectedItemPtr = ui->processSegmentTreeWidget->currentItem();
 
     QString allocated = "False";
@@ -244,11 +275,13 @@ void processesinputform::on_deallocatePushButton_clicked()
         Outputt::showOP(MainWindow::instance()->myMem, (MainWindow::instance()->myMem.getSize())/20);
         selectedItemPtr->setText(2, "False");
     }
+    Segment::collectFree(MainWindow::instance()->myMem.memorySegmentsList);
 
 }
 
 void processesinputform::on_drawPushButton_clicked()
 {
+    Segment::collectFree(MainWindow::instance()->myMem.memorySegmentsList);
     Outputt::showOP(MainWindow::instance()->myMem, (MainWindow::instance()->myMem.getSize())/20);
 }
 
@@ -305,6 +338,7 @@ void processesinputform::on_worstFitCheckBox_stateChanged()
 
 void processesinputform::on_deallocatePushButton_2_clicked()
 {
+    Segment::collectFree(MainWindow::instance()->myMem.memorySegmentsList);
     QTreeWidgetItem* selectedOldItemPtr = ui->oldProcessTreeWidget->currentItem();
 
     QString allocated = "False";
@@ -323,6 +357,7 @@ void processesinputform::on_deallocatePushButton_2_clicked()
                 MainWindow::instance()->myMem.deallocate(*oldIt);
             }
         }
+        Segment::collectFree(MainWindow::instance()->myMem.memorySegmentsList);
         Outputt::showOP(MainWindow::instance()->myMem, (MainWindow::instance()->myMem.getSize())/20);
         selectedOldItemPtr->setText(2, "False");
     }
@@ -333,5 +368,5 @@ void processesinputform::on_deallocatePushButton_2_clicked()
             QMessageBox::information(this,tr("Cannot Deallocate"),tr("Please select a process to deallocate"));
         }
     }
-
+    Segment::collectFree(MainWindow::instance()->myMem.memorySegmentsList);
 }

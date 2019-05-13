@@ -37,7 +37,6 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     processesinputform.h \
-    output.h \
     Includess.h \
     Memoryy.h \
     Processs.h \

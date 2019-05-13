@@ -70,7 +70,7 @@ public:
 	/**Given a list of segments having base and limits assigned, sorts a list of segments and merges between consecutive segments.
 	*/
 	list<Segment> static collect(list<Segment> &memorySegmentsList);
-    list<Segment> static collectFree(list<Segment> &memorySegmentsList);
+    void static collectFree(list<Segment> &memorySegmentsList);
 	/**Given a list of segments with assigned states, filters free segments into an output list of segments.
 	*/
 	list<Segment> static filterFree(list<Segment> segmentList);

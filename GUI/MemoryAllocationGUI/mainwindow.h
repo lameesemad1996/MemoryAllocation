@@ -25,6 +25,7 @@ public:
     long totalHoleSize;
     bool invalidTotalMemSizeFlag;
     Memory fillOldProcess(list<Segment> holesSegList, long memSize, bool &invalidTotalMemSizeFlag);
+    long sumAddHolePressed;
 
 private:
     static MainWindow* s_instance;

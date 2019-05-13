@@ -54,7 +54,7 @@ bool Memory::first_fit_allocate_check(Process process)
 	list<Segment> freeSegmentsList = Segment::filterFree(memorySegmentsList);
 	//this->freeSegmentsList.assign(freeSegmentsList.begin(), freeSegmentsList.end());
 	list<Segment> freeSegmentsListCopy;
-	freeSegmentsListCopy.assign(freeSegmentsList.begin(), freeSegmentsList.end());
+    freeSegmentsListCopy.assign(freeSegmentsList.begin(), freeSegmentsList.end());
 
 	list<Segment> processCopySegList;
 	processCopySegList.assign(process.segmentList.begin(), process.segmentList.end());
@@ -83,7 +83,7 @@ bool Memory::first_fit_allocate_check(Process process)
 			continue;
 
 		for (it1 = freeSegmentsListCopy.begin(); it1 != freeSegmentsListCopy.end(); ++it1)
-		{
+        {
 			if ((it1->getLimit() >= it0->getSize()) && (it1->getState() == Segment::free))
 			{
 				//mark this segment as allocated
@@ -115,7 +115,7 @@ bool Memory::first_fit_allocate_check(Process process)
 					//it1++;
 				}
 				freeSegmentsListCopy = Segment::filterFree(freeSegmentsListCopy);
-				Segment::collect(freeSegmentsListCopy);
+                Segment::collect(freeSegmentsListCopy);
 				break;
 
 			}
@@ -157,7 +157,7 @@ bool Memory::first_fit_allocate(Process &process)
 		bool returnable = false;
 
 		list<Segment> freeSegments = Segment::filterFree(memorySegmentsList);
-        //Segment::collectFree(memorySegmentsList);
+        Segment::collectFree(memorySegmentsList);
 
 		//corner cases
 		if (process.segmentList.empty())
@@ -184,7 +184,7 @@ bool Memory::first_fit_allocate(Process &process)
 				continue;
 
 			for (it1 = freeSegments.begin(); it1 != freeSegments.end(); ++it1)
-			{
+            {
 				if ((it1->getLimit() >= it0->getSize()) && (it1->getState() == Segment::free))
 				{
 					//mark this segment as allocated
@@ -252,13 +252,13 @@ bool Memory::first_fit_allocate(Process &process)
 								it2->setBase(newFreeSegmentBase);
 								it2->setLimit(newFreeSegSize);
 							}
-							freeSegments = Segment::filterFree(memorySegmentsList);
+                            freeSegments = Segment::filterFree(memorySegmentsList);
 							break;
 						}
 					}
 					freeSegments = Segment::filterFree(memorySegmentsList);
-                    //Segment::collectFree(memorySegmentsList);
-					Segment::collect(freeSegments);
+                    Segment::collectFree(memorySegmentsList);
+                    Segment::collect(freeSegments);
 					break;
 				}
 				else
@@ -300,7 +300,7 @@ bool Memory::best_fit_allocate_check(Process process)
 	list<Segment> freeSegmentsList = Segment::filterFree(memorySegmentsList);
 	list<Segment> freeSegmentsListCopy;
 	freeSegmentsListCopy.assign(freeSegmentsList.begin(), freeSegmentsList.end());
-	Segment::sortSegListBySize_ascending(freeSegmentsListCopy);
+    Segment::sortSegListBySize_ascending(freeSegmentsListCopy);
 
 	list<Segment> processCopySegList;
 	processCopySegList.assign(process.segmentList.begin(), process.segmentList.end());
@@ -331,7 +331,7 @@ bool Memory::best_fit_allocate_check(Process process)
 		Segment::sortSegListBySize_ascending(freeSegmentsListCopy);
 
 		for (it1 = freeSegmentsListCopy.begin(); it1 != freeSegmentsListCopy.end(); ++it1)
-		{
+        {
 			if ((it1->getLimit() >= it0->getSize()) && (it1->getState() == Segment::free))
 			{
 				//mark this segment as allocated
@@ -363,7 +363,7 @@ bool Memory::best_fit_allocate_check(Process process)
 					//it1++;
 				}
 				freeSegmentsListCopy = Segment::filterFree(freeSegmentsListCopy);
-				Segment::sortSegListBySize_ascending(freeSegmentsListCopy);
+                Segment::sortSegListBySize_ascending(freeSegmentsListCopy);
 				break;
 
 			}
@@ -405,7 +405,7 @@ bool Memory::best_fit_allocate(Process &process)
 		bool returnable = false;
 
 		list<Segment> freeSegments = Segment::filterFree(memorySegmentsList);
-		Segment::sortSegListBySize_ascending(freeSegments);
+        Segment::sortSegListBySize_ascending(freeSegments);
 
 		//corner cases
 		if (process.segmentList.empty())
@@ -431,7 +431,7 @@ bool Memory::best_fit_allocate(Process &process)
 				continue;
 
 			for (it1 = freeSegments.begin(); it1 != freeSegments.end(); ++it1)
-			{
+            {
 				if ((it1->getLimit() >= it0->getSize()) && (it1->getState() == Segment::free))
 				{
 					//mark this segment as allocated
@@ -476,7 +476,7 @@ bool Memory::best_fit_allocate(Process &process)
 					//updating real memorySegmentsList
 					list<Segment>::iterator it2;
 					for (it2 = this->memorySegmentsList.begin(); it2 != this->memorySegmentsList.end(); ++it2)
-					{
+                    {
 						if (it2->getID() == segID)
 						{
 							it2->setName(newSegName);
@@ -504,7 +504,7 @@ bool Memory::best_fit_allocate(Process &process)
 								it2->setState(Segment::free);
 							}
 							freeSegments = Segment::filterFree(memorySegmentsList);
-							Segment::sortSegListBySize_ascending(freeSegments);
+                            Segment::sortSegListBySize_ascending(freeSegments);
 
 							break;
 						}
@@ -550,7 +550,7 @@ bool Memory::worst_fit_allocate_check(Process process)
 	list<Segment> freeSegmentsList = Segment::filterFree(memorySegmentsList);
 	list<Segment> freeSegmentsListCopy;
 	freeSegmentsListCopy.assign(freeSegmentsList.begin(), freeSegmentsList.end());
-	Segment::sortSegListBySize_descending(freeSegmentsListCopy);
+    Segment::sortSegListBySize_descending(freeSegmentsListCopy);
 
 	list<Segment> processCopySegList;
 	processCopySegList.assign(process.segmentList.begin(), process.segmentList.end());
@@ -581,7 +581,7 @@ bool Memory::worst_fit_allocate_check(Process process)
 		Segment::sortSegListBySize_descending(freeSegmentsListCopy);
 
 		for (it1 = freeSegmentsListCopy.begin(); it1 != freeSegmentsListCopy.end(); ++it1)
-		{
+        {
 			if ((it1->getLimit() >= it0->getSize()) && (it1->getState() == Segment::free))
 			{
 				//mark this segment as allocated
@@ -613,7 +613,7 @@ bool Memory::worst_fit_allocate_check(Process process)
 					//it1++;
 				}
 				freeSegmentsListCopy = Segment::filterFree(freeSegmentsListCopy);
-				Segment::sortSegListBySize_descending(freeSegmentsListCopy);
+                Segment::sortSegListBySize_descending(freeSegmentsListCopy);
 				break;
 
 			}
@@ -655,7 +655,7 @@ bool Memory::worst_fit_allocate(Process &process)
 		bool returnable = false;
 
 		list<Segment> freeSegments = Segment::filterFree(memorySegmentsList);
-		Segment::sortSegListBySize_descending(freeSegments);
+        Segment::sortSegListBySize_descending(freeSegments);
 
 		//corner cases
 		if (process.segmentList.empty())
@@ -676,12 +676,12 @@ bool Memory::worst_fit_allocate(Process &process)
 
 
 		for (it0 = process.segmentList.begin(); it0 != process.segmentList.end(); ++it0)
-		{
+        {
 			if (it0->allocated == true)
 				continue;
 
 			for (it1 = freeSegments.begin(); it1 != freeSegments.end(); ++it1)
-			{
+            {
 				if ((it1->getLimit() >= it0->getSize()) && (it1->getState() == Segment::free))
 				{
 					//mark this segment as allocated
@@ -726,7 +726,7 @@ bool Memory::worst_fit_allocate(Process &process)
 					//updating real memorySegmentsList
 					list<Segment>::iterator it2;
 					for (it2 = this->memorySegmentsList.begin(); it2 != this->memorySegmentsList.end(); ++it2)
-					{
+                    {
 						if (it2->getID() == segID)
 						{
 							it2->setName(newSegName);
@@ -823,7 +823,7 @@ void Memory::deallocate(Process &process)
     {
         it2->allocated = false;
     }
-    //Segment::collectFree(this->memorySegmentsList);
+    Segment::collectFree(this->memorySegmentsList);
 }
 void Memory::deallocate(Segment &seg)
 {
@@ -839,7 +839,5 @@ void Memory::deallocate(Segment &seg)
             it->setState(Segment::segmentState::free);
         }
     }
-    //Segment::collectFree(this->memorySegmentsList);
-
     return;
 }
